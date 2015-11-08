@@ -5,6 +5,6 @@ export FINAL_JAR_NAME=Preprocessor.jar
 
 cd preprocessor
 mvn assembly:assembly -DdescriptorId=jar-with-dependencies -Denforcer.skip=true
-
-cp target/$MAVEN_JAR_NAME $FINAL_JAR_NAME
+cd ..
+cp preprocessor/target/$MAVEN_JAR_NAME $FINAL_JAR_NAME
 

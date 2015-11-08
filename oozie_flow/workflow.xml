@@ -1,0 +1,32 @@
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="cs286_project">
+	<start to="preprocessor"/>
+
+	<action name="preprocessor">
+		<java>
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+
+			<configuration>
+				<property>
+					<name>mapred.job.queue.name</name>
+					<value>${queueName}</value>
+				</property>
+			</configuration>
+			<main-class>zayd_hammoudeh.Processor</main-class>
+			<arg>${inputFile}</arg>
+			<arg>${trainingSetFile}</arg>
+			<arg>${testSetDir}</arg>
+			<arg>${numbProcessingNodes}</arg>
+			<arg>${cuisinesFile}</arg>
+		</java>
+		<ok to="end"/>
+		<error to="fail"/>
+	</action>
+
+	<kill name="fail">
+		<message>CS286 Recipes Project Failed: [${wf:errorMessage(wf:lastErrorNode())}]</message>
+	</kill>
+
+	<end name="end"/>
+</workflow-app>
+
