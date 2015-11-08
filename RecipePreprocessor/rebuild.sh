@@ -1,9 +1,10 @@
 #!/bin/bash
 
-export JAR_NAME=Preprocessor
+export MAVEN_JAR_NAME=preprocessor-1.0-SNAPSHOT-jar-with-dependencies.jar
+export FINAL_JAR_NAME=Preprocessor.jar
 
-rm -rf bin 
-mkdir bin  
+cd preprocessor
+mvn assembly:assembly -DdescriptorId=jar-with-dependencies -Denforcer.skip=true
 
-javac -d bin -cp gson-2.4.jar src/RecipePreprocessor/Preprocessor.java
-jar -cvfm $JAR_NAME.jar MANIFEST.MF -C bin/ . 
+cp target/$MAVEN_JAR_NAME $FINAL_JAR_NAME
+

@@ -11,6 +11,8 @@ export NUMBER_TEST_SET_FILES=10
 export CUISINE_FILE_DIR=/home/user01/CS286_Project/RecipePreprocessor/cuisines/
 export CUISINE_FILE_NAME=cuisines.txt
 
+export JAR_FILE=preprocessor/target/preprocessor-1.0-SNAPSHOT-jar-with-dependencies.jar
+
 # Clear the training set file
 rm -rf $TRAINING_SET_DIR
 mkdir -p $TRAINING_SET_DIR
@@ -23,4 +25,4 @@ mkdir -p $TEST_SET_DIR
 rm -rf $CUISINE_FILE_DIR
 mkdir -p $CUISINE_FILE_DIR
 
-java -cp gson-2.4.jar -jar Preprocessor.jar $DATASET $TRAINING_SET_DIR$TRAINING_SET_FILENAME $TEST_SET_DIR $NUMBER_TEST_SET_FILES $CUISINE_FILE_DIR$CUISINE_FILE_NAME
+java -jar $JAR_FILE $DATASET $TRAINING_SET_DIR$TRAINING_SET_FILENAME $TEST_SET_DIR $NUMBER_TEST_SET_FILES $CUISINE_FILE_DIR$CUISINE_FILE_NAME
