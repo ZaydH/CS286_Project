@@ -5,12 +5,11 @@ export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native/Linux-amd64-64
 export CLASSPATH=$HADOOP_HOME/*:$HADOOP_HOME/lib/* 
 export HADOOP_CLASSPATH=$CLASSPATH
 
-export JAR_NAME=Ensemble.jar
+rm -rf classes
+mkdir classes
 
-export CLASSES_DIR=/home/user01/CS286_Project/EnsembleClassifier/classes
-
-javac -d $CLASSES_DIR EnsembleMapper.java
-javac -d $CLASSES_DIR EnsembleReducer.java
-jar -cvf $ENSEMBLE_JAR -C $CLASSES_DIR/ .
-javac -classpath $CLASSPATH:Ensemble.jar -d $CLASSES_DIR EnsembleDriver.java
-jar -uvf $ENSEMBLE_JAR -C $CLASSES_DIR/ .
+javac -d classes EnsembleMapper.java
+javac -d classes EnsembleReducer.java
+jar -cvf Iris.jar -C classes/ .
+javac -classpath $CLASSPATH:Iris.jar -d classes EnsembleDriver.java
+jar -uvf Iris.jar -C classes/ .

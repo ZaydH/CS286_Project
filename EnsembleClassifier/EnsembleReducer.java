@@ -1,4 +1,4 @@
-package Iris;
+package Ensemble;
 
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.io.Text;
@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 
 
 @SuppressWarnings("unused")
-public class IrisReducer  extends Reducer <Text,Text,Text,Text> {
+public class EnsembleReducer  extends Reducer <Text,Text,Text,Text> {
 	String[] tempString;
 	float tempSepalLength, tempSepalWidth, tempPetalLength, tempPetalWidth;
 	float totalSepalLength, totalSepalWidth, totalPetalLength, totalPetalWidth;

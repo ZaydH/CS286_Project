@@ -1,4 +1,4 @@
-package Iris; 
+package Ensemble; 
 
 //import java.util.*;
 import org.apache.hadoop.conf.Configured;
@@ -13,7 +13,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 
 
-public class IrisDriver extends Configured implements Tool {
+public class EnsembleDriver extends Configured implements Tool {
 
 	public int run(String[] args) throws Exception {
 		// check the CLI
@@ -26,10 +26,10 @@ public class IrisDriver extends Configured implements Tool {
 		Job job = new Job(getConf(), "Zayd_Hammoudeh");
 
 		job.setJarByClass(getClass());
-		job.setMapperClass(Iris.IrisMapper.class);
+		job.setMapperClass(Ensemble.EnsembleMapper.class);
 
 		// TODO comment out the Reducer class definition
-		job.setReducerClass(Iris.IrisReducer.class);
+		job.setReducerClass(Ensemble.EnsembleReducer.class);
 
 		job.setInputFormatClass(TextInputFormat.class);
 		job.setOutputKeyClass(Text.class);
@@ -45,6 +45,6 @@ public class IrisDriver extends Configured implements Tool {
 
 	public static void main(String[] args) throws Exception { 
 		Configuration conf = new Configuration();
-		System.exit(ToolRunner.run(conf, new IrisDriver(), args));
+		System.exit(ToolRunner.run(conf, new EnsembleDriver(), args));
 	} 
 }

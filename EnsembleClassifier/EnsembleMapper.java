@@ -1,4 +1,4 @@
-package Iris;
+package Ensemble;
 
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.io.Text;
@@ -7,7 +7,7 @@ import org.apache.hadoop.io.LongWritable;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-public class IrisMapper extends Mapper <LongWritable,Text,Text,Text> {
+public class EnsembleMapper extends Mapper <LongWritable,Text,Text,Text> {
 	
 	private static final boolean USE_STRING_TOKENIZER = false;
 	
