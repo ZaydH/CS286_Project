@@ -12,7 +12,7 @@
 					<value>${queueName}</value>
 				</property>
 			</configuration>
-			<main-class>zayd_hammoudeh.Processor</main-class>
+			<main-class>zayd_hammoudeh.Preprocessor</main-class>
 			<arg>${inputFile}</arg>
 			<arg>${trainingSetFile}</arg>
 			<arg>${testSetDir}</arg>
