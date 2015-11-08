@@ -2,7 +2,7 @@
 
 export DATASET=/home/user01/CS286_Project/RecipePreprocessor/train.json
 
-export TRAINING_SET_DIR=/home/user01/CS286_PROJECT/RecipePreprocessor/
+export TRAINING_SET_DIR=/home/user01/CS286_Project/RecipePreprocessor/training_set/
 export TRAINING_SET_FILENAME=training_set.txt
 
 export TEST_SET_DIR=/home/user01/CS286_Project/RecipePreprocessor/test_set/
