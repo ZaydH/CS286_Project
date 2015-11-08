@@ -5,6 +5,11 @@
 		<java>
 			<job-tracker>${jobTracker}</job-tracker>
 			<name-node>${nameNode}</name-node>
+			
+			<prepare>
+				<delete path="${testSetDir}"/>
+				<mkdir path="${testSetDir}"/>
+			</prepare>
 
 			<configuration>
 				<property>

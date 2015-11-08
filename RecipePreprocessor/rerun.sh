@@ -2,7 +2,7 @@
 
 export DATASET=/home/user01/CS286_Project/RecipePreprocessor/train.json
 
-export TRAINING_SET_DIR=/home/user01/CS286_Project/RecipePreprocessor/training_set/
+export TRAINING_SET_DIR=/home/user01/CS286_Project/RecipePreprocessor/training_set
 export TRAINING_SET_FILENAME=training_set.txt
 
 export TEST_SET_DIR=/home/user01/CS286_Project/RecipePreprocessor/test_set/
@@ -25,5 +25,5 @@ mkdir -p $TEST_SET_DIR
 rm -rf $CUISINE_FILE_DIR
 mkdir -p $CUISINE_FILE_DIR
 
-java -jar $JAR_FILE $DATASET $TRAINING_SET_DIR$TRAINING_SET_FILENAME $TEST_SET_DIR $NUMBER_TEST_SET_FILES $CUISINE_FILE_DIR$CUISINE_FILE_NAME
-java -jar $JAR_FILE /user/user01/data/train.json /user/user01/data/training_set/training_set.txt /user/user01/data/test_set/ 10 /user/user01/data/cuisines/cuisines.txt
+java -jar $JAR_FILE $DATASET $TRAINING_SET_DIR $TEST_SET_DIR $NUMBER_TEST_SET_FILES $CUISINE_FILE_DIR
+java -jar $JAR_FILE /user/user01/data/train.json /user/user01/data/training_set/ /user/user01/data/test_set/ 10 /user/user01/data/cuisines/

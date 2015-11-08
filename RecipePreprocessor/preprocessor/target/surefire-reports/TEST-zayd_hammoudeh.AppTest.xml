@@ -2,8 +2,8 @@
 <testsuite failures="0" time="0.012" errors="0" skipped="0" tests="1" name="zayd_hammoudeh.AppTest">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
-    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre/lib/amd64"/>
-    <property name="java.vm.version" value="24.91-b01"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre/lib/amd64"/>
+    <property name="java.vm.version" value="24.85-b03"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=":"/>
@@ -15,9 +15,9 @@
     <property name="sun.os.patch.level" value="unknown"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="user.dir" value="/home/user01/CS286_Project/RecipePreprocessor/preprocessor"/>
-    <property name="java.runtime.version" value="1.7.0_91-mockbuild_2015_10_21_19_56-b00"/>
+    <property name="java.runtime.version" value="1.7.0_85-mockbuild_2015_07_25_13_10-b00"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre/lib/endorsed"/>
+    <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre/lib/endorsed"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.io.tmpdir" value="/tmp"/>
     <property name="line.separator" value="
@@ -30,7 +30,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="51.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="os.version" value="2.6.32-573.7.1.el6.x86_64"/>
+    <property name="os.version" value="2.6.32-573.3.1.el6.x86_64"/>
     <property name="user.home" value="/home/user01"/>
     <property name="user.timezone" value="America/Los_Angeles"/>
     <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
@@ -40,17 +40,17 @@
     <property name="java.class.path" value="/usr/local/maven/boot/plexus-classworlds-2.4.jar"/>
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="java.home" value="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre"/>
+    <property name="java.home" value="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre"/>
     <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher assembly:assembly -DdescriptorId=jar-with-dependencies -Denforcer.skip=true"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="java.vm.info" value="mixed mode"/>
     <property name="descriptorId" value="jar-with-dependencies"/>
-    <property name="java.version" value="1.7.0_91"/>
-    <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre/lib/ext:/usr/java/packages/lib/ext"/>
+    <property name="java.version" value="1.7.0_85"/>
+    <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre/lib/ext:/usr/java/packages/lib/ext"/>
     <property name="securerandom.source" value="file:/dev/./urandom"/>
-    <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre/lib/rhino.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91.x86_64/jre/classes"/>
+    <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre/lib/rhino.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.85.x86_64/jre/classes"/>
     <property name="java.vendor" value="Oracle Corporation"/>
     <property name="enforcer.skip" value="true"/>
     <property name="maven.home" value="/usr/local/maven"/>
@@ -60,5 +60,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.004" classname="zayd_hammoudeh.AppTest" name="testApp"/>
+  <testcase time="0.001" classname="zayd_hammoudeh.AppTest" name="testApp"/>
 </testsuite>
