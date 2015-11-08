@@ -5,11 +5,14 @@ export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native/Linux-amd64-64
 export CLASSPATH=$HADOOP_HOME/*:$HADOOP_HOME/lib/* 
 export HADOOP_CLASSPATH=$CLASSPATH
 
+export JAR_NAME=ensemble.jar
+
 rm -rf classes
 mkdir classes
+rm -f $JAR_NAME
 
 javac -d classes EnsembleMapper.java
 javac -d classes EnsembleReducer.java
-jar -cvf Ensemble.jar -C classes/ .
-javac -classpath $CLASSPATH:Iris.jar -d classes EnsembleDriver.java
-jar -uvf Ensemble.jar -C classes/ .
+jar -cvf $JAR_NAME -C classes/ .
+javac -classpath $CLASSPATH:$JAR_NAME -d classes EnsembleDriver.java
+jar -uvf $JAR_NAME -C classes/ .
