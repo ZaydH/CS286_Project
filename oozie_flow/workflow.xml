@@ -7,8 +7,12 @@
 			<name-node>${nameNode}</name-node>
 			
 			<prepare>
-				<delete path="${testSetDir}"/>
-				<mkdir path="${testSetDir}"/>
+                                <delete path="${trainingSetDir}"/>
+                                <delete path="${trainingSetDir}"/>
+                                <delete path="${cuisinesDir}"/>
+                                <mkdir path="${trainingSetDir}"/>
+                                <mkdir path="${testSetDir}"/>
+                                <mkdir path="${cuisinesDir}"/>
 			</prepare>
 
 			<configuration>
@@ -19,10 +23,10 @@
 			</configuration>
 			<main-class>zayd_hammoudeh.Preprocessor</main-class>
 			<arg>${inputFile}</arg>
-			<arg>${trainingSetFile}</arg>
+			<arg>${trainingSetDir}</arg>
 			<arg>${testSetDir}</arg>
 			<arg>${numbProcessingNodes}</arg>
-			<arg>${cuisinesFile}</arg>
+			<arg>${cuisinesDir}</arg>
 		</java>
 		<ok to="end"/>
 		<error to="fail"/>
