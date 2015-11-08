@@ -21,10 +21,10 @@ public class Preprocessor {
 	 * 
 	 * @param args	
 	 * 				- args[0] - Path to the full dataset
-	 * 				- args[1] - File outputting the training set data.
+	 * 				- args[1] - Folder for outputting the training set data.
 	 * 				- args[2] - Directory for outputting the test set data.
 	 * 				- args[3] - Number of test set files.
-	 * 				- args[4] - Filename for the cuisine type mapper
+	 * 				- args[4] - Folder for the cuisine type mapper
 	 *  
 	 * @throws IllegalArgumentException
 	 * @throws FileNotFoundException
@@ -39,10 +39,10 @@ public class Preprocessor {
 		// Parse the input arguments
 		int k = 0;
 		String trainingFile = args[k++];
-		String trainingSetFilePath = args[k++];
-		String testSetDir = args[k++]; 
+		String trainingSetDir = appendPathSlash(args[k++]); 
+		String testSetDir = appendPathSlash(args[k++]); 
 		int numbTestFiles = Integer.parseInt(args[k++]);
-		String cuisinesFilePath = args[k++];
+		String cuisinesDir = appendPathSlash(args[k++]);
 		
 		// Read in the labeled data
 		BufferedReader fileIn = new BufferedReader(new FileReader(trainingFile));
@@ -87,22 +87,16 @@ public class Preprocessor {
 		
 		// Sort the cuisines in alphabetical order
 		Collections.sort(cuisines);
-		printCuisineInfoToAFile(cuisinesFilePath, cuisines);
+		printCuisineInfoToAFile(cuisinesDir + "cuisines.txt", cuisines);
 		
 		// Print the training set data
 		int trainingSetSize = (int)(2.0 / 3 * recipeArr.length);
-		printRecipesToFile(trainingSetFilePath, recipeArr, 0, trainingSetSize, ingredientIDs, cuisines);
+		printRecipesToFile(trainingSetDir + "training_set.txt", recipeArr, 0, trainingSetSize, ingredientIDs, cuisines);
 		
 		// Calculate the number of records per file
 		int recordsPerFile = (recipeArr.length - trainingSetSize) / numbTestFiles;
 		
-		// Verify the test set directory contains a terminating slash if applicable
-		if( !testSetDir.endsWith("\\") && !testSetDir.endsWith("/") ){
-			if(testSetDir.contains("\\"))
-				testSetDir = testSetDir.concat("\\");
-			else if(testSetDir.contains("/"))
-				testSetDir = testSetDir.concat("/");
-		}
+
 		// Output the test set information
 		for(int i = 0; i < numbTestFiles; i++){
 		
@@ -262,5 +256,18 @@ public class Preprocessor {
 		}
 		fileOut.close(); // Close the file.
 		
+	}
+	
+	public static String appendPathSlash(String dirPath){
+		
+		// Verify the directory contains a terminating slash if applicable
+		if( !dirPath.endsWith("\\") && !dirPath.endsWith("/") ){
+			if(dirPath.contains("\\"))
+				dirPath = dirPath.concat("\\");
+			else if(dirPath.contains("/"))
+				dirPath = dirPath.concat("/");
+		}
+		
+		return dirPath;
 	}
 }
