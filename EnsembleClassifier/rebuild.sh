@@ -10,6 +10,6 @@ mkdir classes
 
 javac -d classes EnsembleMapper.java
 javac -d classes EnsembleReducer.java
-jar -cvf Iris.jar -C classes/ .
+jar -cvf Ensemble.jar -C classes/ .
 javac -classpath $CLASSPATH:Iris.jar -d classes EnsembleDriver.java
-jar -uvf Iris.jar -C classes/ .
+jar -uvf Ensemble.jar -C classes/ .
