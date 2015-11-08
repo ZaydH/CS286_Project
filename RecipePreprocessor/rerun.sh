@@ -26,3 +26,4 @@ rm -rf $CUISINE_FILE_DIR
 mkdir -p $CUISINE_FILE_DIR
 
 java -jar $JAR_FILE $DATASET $TRAINING_SET_DIR$TRAINING_SET_FILENAME $TEST_SET_DIR $NUMBER_TEST_SET_FILES $CUISINE_FILE_DIR$CUISINE_FILE_NAME
+java -jar $JAR_FILE /user/user01/data/train.json /user/user01/data/training_set/training_set.txt /user/user01/data/test_set/ 10 /user/user01/data/cuisines/cuisines.txt
