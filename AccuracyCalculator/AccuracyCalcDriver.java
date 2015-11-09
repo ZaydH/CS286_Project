@@ -26,10 +26,10 @@ public class AccuracyCalcDriver extends Configured implements Tool {
 		Job job = new Job(getConf(), "Zayd_Hammoudeh");
 
 		job.setJarByClass(getClass());
-		job.setMapperClass(Ensemble.EnsembleMapper.class);
+		job.setMapperClass(Accuracy.AccuracyCalcMapper.class);
 
 		// TODO comment out the Reducer class definition
-		job.setReducerClass(Ensemble.EnsembleReducer.class);
+		job.setReducerClass(Accuracy.AccuracyCalcReducer.class);
 
 		job.setInputFormatClass(TextInputFormat.class);
 		job.setOutputKeyClass(Text.class);
@@ -45,6 +45,6 @@ public class AccuracyCalcDriver extends Configured implements Tool {
 
 	public static void main(String[] args) throws Exception { 
 		Configuration conf = new Configuration();
-		System.exit(ToolRunner.run(conf, new EnsembleDriver(), args));
+		System.exit(ToolRunner.run(conf, new AccuracyCalcDriver(), args));
 	} 
 }

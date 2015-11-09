@@ -14,5 +14,5 @@ rm -f $JAR_NAME
 javac -d classes AccuracyCalcMapper.java
 javac -d classes AccuracyCalcReducer.java
 jar -cvf $JAR_NAME -C classes/ .
-javac -classpath $CLASSPATH:$JAR_NAME -d classes AccuracyDriver.java
+javac -classpath $CLASSPATH:$JAR_NAME -d classes AccuracyCalcDriver.java
 jar -uvf $JAR_NAME -C classes/ .
