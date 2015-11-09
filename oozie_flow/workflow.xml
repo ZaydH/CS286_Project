@@ -76,7 +76,7 @@
 
                                 <property>
                                         <name>mapreduce.input.fileinputformat.inputdir</name>
-                                        <value>${mvdmResultsDir}</value>
+                                        <value>${mvdmResultsDir},${overlapResultsDir},${naiveBayesResultsDir}</value>
                                 </property>
 				<property>
 					<name>mapreduce.output.fileoutputformat.outputdir</name>
