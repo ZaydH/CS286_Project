@@ -19,10 +19,9 @@ public class EnsembleMapper extends Mapper <LongWritable,Text,Text,Text> {
 		
 		double sumOfCuisineVals = 0;
 		for(int j = 2; j < splitValues.length; j++)
-			sumOfCuisineVals = Double.parseDouble(splitValues[j]);
+			sumOfCuisineVals += Double.parseDouble(splitValues[j]);
 		
-		
-
+		// Build the output string.
 		StringBuffer sb = new StringBuffer();
 
 		// Add the recipe ID and stored label
