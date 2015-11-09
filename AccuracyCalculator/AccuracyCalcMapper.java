@@ -15,28 +15,17 @@ public class AccuracyCalcMapper extends Mapper <LongWritable,Text,Text,Text> {
 	public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
     
 		// Split the input text by commas.
-		String[] splitValues = value.toString().split(",");
+		String[] splitStr = value.toString().split("\\s+", -1); // "-1" means ignore blank strings
+		String[] cuisineTypes = splitStr[1].split(",");
 		
-		double sumOfCuisineVals = 0;
-		for(int j = 2; j < splitValues.length; j++)
-			sumOfCuisineVals += Double.parseDouble(splitValues[j]);
-		
-		// Build the output string.
-		StringBuffer sb = new StringBuffer();
-
-		// Add the recipe ID and stored label
-		sb.append( splitValues[0] + "," + splitValues[1] );
-		
-		// Build the cuisine values
-		for(int j = 2; j < splitValues.length; j++){
-			sb.append(",");
-			double normalizedVal = Double.parseDouble(splitValues[j])/sumOfCuisineVals;
-			sb.append(normalizedVal);
-			
-		}
+		Text outputText;
+		if(cuisineTypes[0].equals(cuisineTypes[1]))
+			outputText = new Text("1");
+		else
+			outputText = new Text("0");
 
 		// Key is the recipe ID
 		// Value is the normalized class values.	
-		context.write(new Text(splitValues[0]), new Text(sb.toString()));
+		context.write(new Text("accuracy"), outputText);
    }
 }
