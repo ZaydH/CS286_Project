@@ -6,6 +6,8 @@ export PREPROCESSOR_DIR=RecipePreprocessor
 
 export ENSEMBLE_DIR=EnsembleClassifier
 
+export ACCURACY_CALC_DIR=AccuracyCalculator
+
 # Remake the oozie lib directory from scratch.
 rm -rf /home/user01/CS286_Project/$OOZIE_DIR/lib 
 mkdir /home/user01/CS286_Project/$OOZIE_DIR/lib
@@ -26,6 +28,9 @@ cp -r /home/user01/CS286_Project/data/naive_bayes /user/user01/$DATA_DIR
 
 # Copy the ensemble jar into the oozie lib directory.
 cp /home/user01/CS286_Project/$ENSEMBLE_DIR/ensemble.jar /home/user01/CS286_Project/$OOZIE_DIR/lib
+
+# Copy the accuracy calculator jar into the oozie lib directory.
+cp /home/user01/CS286_Project/$ACCURACY_CALC_DIR/accuracy_calc.jar /home/user01/CS286_Project/$OOZIE_DIR/lib
 
 # Last Step - Copy the local Oozie flow directory to the /user/user01 directory.
 hadoop fs -rmr /user/user01/$OOZIE_DIR

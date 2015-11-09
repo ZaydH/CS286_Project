@@ -11,8 +11,12 @@ rm -rf classes
 mkdir classes
 rm -f $JAR_NAME
 
+# Build the jar for this MapReduce flow
 javac -d classes AccuracyCalcMapper.java
 javac -d classes AccuracyCalcReducer.java
 jar -cvf $JAR_NAME -C classes/ .
 javac -classpath $CLASSPATH:$JAR_NAME -d classes AccuracyCalcDriver.java
 jar -uvf $JAR_NAME -C classes/ .
+
+# Remove the classes folder.
+rm -rf classes
