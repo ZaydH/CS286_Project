@@ -36,8 +36,7 @@ public class EnsembleReducer  extends Reducer <Text,Text,Text,Text> {
 
 		// Determine the best cuisine
 		int bestCuisine = 0;
-		for(int i = 1; i < cuisineScore[i]; i++){
-		
+		for(int i = bestCuisine+1; i < cuisineScore.length; i++){
 			if(cuisineScore[bestCuisine] < cuisineScore[i])
 				bestCuisine = i;
 
