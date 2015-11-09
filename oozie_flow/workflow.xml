@@ -28,7 +28,7 @@
 			<arg>${numbProcessingNodes}</arg>
 			<arg>${cuisinesDir}</arg>
 		</java>
-		<ok to="end"/>
+		<ok to="ensemble"/>
 		<error to="fail"/>
 	</action>
 
