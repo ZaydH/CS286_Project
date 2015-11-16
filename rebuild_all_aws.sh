@@ -19,6 +19,8 @@ cp /home/$USER/CS286_Project/$PREPROCESSOR_DIR/Preprocessor.jar /home/$USER/CS28
 hadoop fs -rmr /user/$USER/$DATA_DIR
 hadoop fs -mkdir -p /user/$USER/$DATA_DIR
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/RecipePreprocessor/train.json /user/$USER/$DATA_DIR
+cp /home/$USER/CS286_Project/RecipePreprocessor/train.json /user/$USER/$DATA_DIR
+
 
 # Copy over the ensemble testing data
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/mvdm /user/$USER/$DATA_DIR
