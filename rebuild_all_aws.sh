@@ -9,44 +9,38 @@ export ENSEMBLE_DIR=EnsembleClassifier
 export ACCURACY_CALC_DIR=AccuracyCalculator
 
 # Remake the oozie lib directory from scratch.
-rm -rf /home/$USER/CS286_Project/$OOZIE_DIR/lib 
-mkdir /home/$USER/CS286_Project/$OOZIE_DIR/lib
+echo "Clear the local Oozie lib directory."
+rm -rf /home/$USER/CS286_Project/$OOZIE_DIR/lib
+mkdir /home/$USER/CS286_Project/$OOZIE_DIR/lib 
 
 # Copy the processor jar into the oozie lib directory.
+echo "Copy the preprocessor standard Java jar to the local lib directory."
 cp /home/$USER/CS286_Project/$PREPROCESSOR_DIR/Preprocessor.jar /home/$USER/CS286_Project/$OOZIE_DIR/lib
 
 # Copy over the source data set.
-hadoop fs -rmr /user/$USER/$DATA_DIR
+echo "Recreate the data directory for the entire oozie."
+hadoop fs -rmr /user/$USER/$DATA_DIR >/dev/null
 hadoop fs -mkdir -p /user/$USER/$DATA_DIR
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/RecipePreprocessor/train.json /user/$USER/$DATA_DIR
-cp /home/$USER/CS286_Project/RecipePreprocessor/train.json /user/$USER/$DATA_DIR
-
 
 # Copy over the ensemble testing data
+echo "For debug purposes, copy dummy test data to the program output directories."
+echo "NOTE: ONCE THE CLASSIFICATION STEPS ARE WORKING, THIS STEP SHOULD BE COMMENTED OUT."
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/mvdm /user/$USER/$DATA_DIR
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/overlap /user/$USER/$DATA_DIR
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/naive_bayes /user/$USER/$DATA_DIR
 
 # Copy the ensemble jar into the oozie lib directory.
+echo "Copy the ensemble Hadoop jar to the local Oozie lib directory."
 cp /home/$USER/CS286_Project/$ENSEMBLE_DIR/ensemble.jar /home/$USER/CS286_Project/$OOZIE_DIR/lib
 
 # Copy the accuracy calculator jar into the oozie lib directory.
+echo "Copy the accuracy calculator Hadoop jar to the local Oozie lib directory."
 cp /home/$USER/CS286_Project/$ACCURACY_CALC_DIR/accuracy_calc.jar /home/$USER/CS286_Project/$OOZIE_DIR/lib
-
-# Clear any existing test set data
-rm -rf /home/$USER/CS286_Project/RecipePreprocessor/training_set/*
-mkdir -p /home/$USER/CS286_Project/RecipePreprocessor/training_set
-chmod -R 777 /home/$USER/CS286_Project/RecipePreprocessor/training_set
-hadoop fs -mkdir -p /user/$USER/data/training_set
-
-rm -rf /home/$USER/CS286_Project/RecipePreprocessor/test_set/*
-mkdir -p /home/$USER/CS286_Project/RecipePreprocessor/test_set
-chmod -R 777 /home/$USER/CS286_Project/RecipePreprocessor/test_set
-hadoop fs -mkdir -p /user/$USER/data/test_set
-
-hadoop fs -mkdir -p /user/$USER/data/cuisines
 
 
 # Last Step - Copy the local Oozie flow directory to the /user/user01 directory.
-hadoop fs -rmr /user/$USER/$OOZIE_DIR
+echo "Copy the oozie program to /user/${USER}/{$OOZIE_DIR}"
+hadoop fs -rmr /user/$USER/$OOZIE_DIR >/dev/null
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/$OOZIE_DIR /user/$USER/
+echo "Building of Oozie flow is completed."
