@@ -212,7 +212,9 @@ public class Preprocessor {
 	 */
 	public static void printCuisineInfoToAFile(String filePath, List<String> cuisines ) throws IOException{
 		
-		BufferedWriter fileOut = new BufferedWriter(new FileWriter(filePath));
+		Path pt = new Path(filePath);
+                FileSystem fs = FileSystem.get(new Configuration());
+		BufferedWriter fileOut = new BufferedWriter(new OutputStreamWriter(fs.create(pt, true)) );
 		
 		for(int i = 0; i < cuisines.size(); i++){
 			// Avoid an extra blank line at the end of the file.
@@ -242,7 +244,10 @@ public class Preprocessor {
 	public static void printRecipesToFile(String filePath, Recipe[] recipes, int startLoc, int endLoc, 
 										  Map<String, Integer>ingredientIDs, List<String> cuisineIDs) throws IOException{
 		
-		BufferedWriter fileOut = new BufferedWriter(new FileWriter(filePath));
+		
+                Path pt = new Path(filePath);
+                FileSystem fs = FileSystem.get(new Configuration());
+                BufferedWriter fileOut = new BufferedWriter(new OutputStreamWriter(fs.create(pt, true)) );
 		
 		// Print the dataset information settings at the top of the file.
 		fileOut.write(cuisineIDs.size() + "," + ingredientIDs.size());
