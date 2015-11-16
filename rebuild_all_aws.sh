@@ -21,7 +21,6 @@ hadoop fs -mkdir -p /user/$USER/$DATA_DIR
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/RecipePreprocessor/train.json /user/$USER/$DATA_DIR
 
 # Copy over the ensemble testing data
-hadoop fs -rmr /user/$USER/data/mvdm
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/mvdm /user/$USER/$DATA_DIR
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/overlap /user/$USER/$DATA_DIR
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/naive_bayes /user/$USER/$DATA_DIR
@@ -31,6 +30,20 @@ cp /home/$USER/CS286_Project/$ENSEMBLE_DIR/ensemble.jar /home/$USER/CS286_Projec
 
 # Copy the accuracy calculator jar into the oozie lib directory.
 cp /home/$USER/CS286_Project/$ACCURACY_CALC_DIR/accuracy_calc.jar /home/$USER/CS286_Project/$OOZIE_DIR/lib
+
+# Clear any existing test set data
+rm -rf /home/$USER/CS286_Project/RecipePreprocessor/training_set/*
+mkdir -p /home/$USER/CS286_Project/RecipePreprocessor/training_set
+chmod -R 777 /home/$USER/CS286_Project/RecipePreprocessor/training_set
+hadoop fs -mkdir -p /user/$USER/data/training_set
+
+rm -rf /home/$USER/CS286_Project/RecipePreprocessor/test_set/*
+mkdir -p /home/$USER/CS286_Project/RecipePreprocessor/test_set
+chmod -R 777 /home/$USER/CS286_Project/RecipePreprocessor/test_set
+hadoop fs -mkdir -p /user/$USER/data/test_set
+
+hadoop fs -mkdir -p /user/$USER/data/cuisines
+
 
 # Last Step - Copy the local Oozie flow directory to the /user/user01 directory.
 hadoop fs -rmr /user/$USER/$OOZIE_DIR

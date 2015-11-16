@@ -1,5 +1,9 @@
 package zayd_hammoudeh;
 
+import java.io.*;
+import java.util.*;
+import java.net.*;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -12,6 +16,12 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import org.apache.hadoop.fs.*;
+import org.apache.hadoop.conf.*;
+import org.apache.hadoop.io.*;
+import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.util.*;
 
 import com.google.gson.Gson;
 
@@ -45,7 +55,9 @@ public class Preprocessor {
 		String cuisinesDir = appendPathSlash(args[k++]);
 		
 		// Read in the labeled data
-		BufferedReader fileIn = new BufferedReader(new FileReader(trainingFile));
+		Path pt = new Path(trainingFile);
+		FileSystem fs = FileSystem.get(new Configuration());
+		BufferedReader fileIn = new BufferedReader(new InputStreamReader(fs.open(pt)));
 
 		Gson gson = new Gson();
 		Recipe[] recipeArr = gson.fromJson(fileIn, Recipe[].class);

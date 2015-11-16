@@ -7,5 +7,5 @@ export PATH=$PATH:$OOZIE_HOME/bin
 $OOZIE_HOME/bin/oozie job -oozie="${OOZIE_URL}" -config /home/ec2-user/CS286_Project/oozie_flow/job_aws.properties -run
 
 # Check job status. Replace <JobName> with the actual job name
-#$OOZIE_HOME/bin/oozie job -oozie $OOZIE_URL/oozie -info <JobName>
-#$OOZIE_HOME/bin/oozie job -oozie $OOZIE_URL/oozie -log <JobName>
+#$OOZIE_HOME/bin/oozie job -oozie $OOZIE_URL -info <JobName>
+#$OOZIE_HOME/bin/oozie job -oozie $OOZIE_URL -log <JobName>
