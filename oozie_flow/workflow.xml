@@ -28,7 +28,7 @@
 			<arg>${numbProcessingNodes}</arg>
 			<arg>${cuisinesDir}</arg>
 		</java>
-		<ok to="ensemble"/>
+		<ok to="naive_bayes"/>
 		<error to="fail"/>
 	</action>
 	
@@ -88,9 +88,14 @@
                                         <value>${naiveBayesResultsDir}</value>
                                 </property>
 
+				<property>
+					<name>trainingFile</name>
+					<value>${trainingSetFile}</value>
+				</property>
+
                         </configuration>
                 </map-reduce>
-                <ok to="ml_join"/>
+                <ok to="ensemble"/>
                 <error to="fail"/>
         </action>
 
