@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.InterruptedIOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Description of NaiveBayesMapper
  * @author "Shubhangi Rakhonde, CS286, SJSU, Fall 2015"
@@ -24,6 +27,7 @@ public class NaiveBayesMapper extends Mapper<LongWritable, Text, Text, Text>
 	private Integer[] cuisineCount;
 	private Integer[][] ingrCount;
 	private Integer[] ingrCountForCuisine;
+	private Integer[][] recipeCountForIngr;
 	private Double[] priors;
 	private Double[][] likelihoods;
 	
@@ -46,10 +50,11 @@ public class NaiveBayesMapper extends Mapper<LongWritable, Text, Text, Text>
 		ingrCountForCuisine = null;
 		priors = null;
 		likelihoods = null;
+		recipeCountForIngr = null;
 		
 		//Get the training data path
 		String trainingFile = context.getConfiguration().get("trainingFile");
-		System.out.println("Training file path from conf = "+trainingFile);
+		//System.out.println("Training file path from conf = "+trainingFile);
 		//String trainingFile = "/Users/shubhangi/Documents/CS286_Project/RecipePreprocessor/training_set/training_set.txt";
 		
 		//Read the training data and build the classifier : Uncomment 3 lines and comment 4th
@@ -57,9 +62,10 @@ public class NaiveBayesMapper extends Mapper<LongWritable, Text, Text, Text>
 //		FileSystem fs = FileSystem.get(new Configuration());
 //		BufferedReader training = new BufferedReader(new InputStreamReader(fs.open(p)));
 		BufferedReader training = new BufferedReader(new FileReader(trainingFile));
-		
+
 		while ((thisLine = training.readLine()) != null)
 		{
+			//System.out.println("thisLine = "+thisLine);
 			if(count == 0)
 			{
 				String[] line1 = thisLine.split(",");
@@ -68,6 +74,7 @@ public class NaiveBayesMapper extends Mapper<LongWritable, Text, Text, Text>
 				cuisineCount = new Integer[cuisineTotal];
 				ingrCountForCuisine = new Integer[cuisineTotal];
 				ingrCount = new Integer[cuisineTotal][ingrTotal];
+				recipeCountForIngr = new Integer[cuisineTotal][ingrTotal];
 				//initialize everything to 0
 				for (int i = 0; i < cuisineCount.length; i++)
 				{
@@ -79,6 +86,7 @@ public class NaiveBayesMapper extends Mapper<LongWritable, Text, Text, Text>
 					for (int j = 0; j < ingrCount[0].length; j++)
 					{
 						ingrCount[i][j] = 0;
+						recipeCountForIngr[i][j] = 0;
 					}
 				}
 				count++;
@@ -87,11 +95,17 @@ public class NaiveBayesMapper extends Mapper<LongWritable, Text, Text, Text>
 			String[] tokens = thisLine.split(",");
 			int cuisineId = Integer.parseInt(tokens[1]);
 			cuisineCount[cuisineId]++;
+			Set<Integer> ingrDistinct = new HashSet<Integer>();
 			for (int i = 2; i < tokens.length; i++)
 			{
 				int ingrId = Integer.parseInt(tokens[i]);
 				ingrCount[cuisineId][ingrId]++;
 				ingrCountForCuisine[cuisineId]++;
+				ingrDistinct.add(ingrId);
+			}
+			for (Integer ing : ingrDistinct)
+			{	
+				recipeCountForIngr[cuisineId][ing]++;
 			}
 			count++;
 		}
@@ -103,9 +117,10 @@ public class NaiveBayesMapper extends Mapper<LongWritable, Text, Text, Text>
 //		System.out.println(NaiveBayesClassifier.prettyPrintArray(cuisineCount));
 //		System.out.println("======== ingredient COUNT =======");
 //		System.out.println(NaiveBayesClassifier.prettyPrintArray(ingrCount));
-//		
+		
 		priors = NaiveBayesClassifier.computePriors(cuisineCount, trainingCount);
-		likelihoods = NaiveBayesClassifier.computeLikelihoods(ingrCount, ingrCountForCuisine, ingrTotal);
+		//likelihoods = NaiveBayesClassifier.computeLikelihoodsMultinomial(ingrCount, ingrCountForCuisine, ingrTotal);
+		likelihoods = NaiveBayesClassifier.computeLikelihoodsBernoulli(cuisineCount, ingrCount, ingrCountForCuisine, recipeCountForIngr, cuisineTotal);
 		// PRINT PRIORS and LIKELIHOODS
 //		System.out.println("=============== PRIORS ===============");
 //		System.out.println(NaiveBayesClassifier.prettyPrintArray(priors));
