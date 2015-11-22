@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import org.apache.hadoop.io.retry.RetryPolicies.MultipleLinearRandomRetry;
+import org.jets3t.service.io.TempFile;
 /**
  * Class having Naive Bayes classification algorithms
  * @author "Shubhangi Rakhonde, CS298, SJSU, Fall 2015"
@@ -83,7 +84,7 @@ public class NaiveBayesClassifier
 	 */
 	public static Double[] computePosterior(ArrayList<Integer> testSet, Double[] priors, Double likelihoods[][])
 	{
-		Double[] logPosteriors = new Double[priors.length];
+		Double[] posteriors = new Double[priors.length];
 
 			for (int j = 0; j < priors.length; j++)
 			{
@@ -94,9 +95,10 @@ public class NaiveBayesClassifier
 					int testIngrId = testSet.get(k);
 					pOfCuisineGivenIngr += Math.log(likelihoods[j][testIngrId])+NORMALISER;
 				}
-				logPosteriors[j] = pOfCuisineGivenIngr;
+				Double temp = pOfCuisineGivenIngr;
+				posteriors[j] = Math.exp(pOfCuisineGivenIngr);
 			}	
-		return logPosteriors;
+		return posteriors;
 	}
 	
 	/**
