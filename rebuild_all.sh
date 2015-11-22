@@ -24,9 +24,12 @@ cp /home/$USER/CS286_Project/RecipePreprocessor/train.json /user/$USER/$DATA_DIR
 
 # Copy over the ensemble testing data
 rm -rf /user/$USER/data/mvdm
-cp -r /home/$USER/CS286_Project/data/mvdm /user/$USER/$DATA_DIR
-cp -r /home/$USER/CS286_Project/data/overlap /user/$USER/$DATA_DIR
-cp -r /home/$USER/CS286_Project/data/naive_bayes /user/$USER/$DATA_DIR
+#cp -r /home/$USER/CS286_Project/data/mvdm /user/$USER/$DATA_DIR
+mkdir -p /user/$USER/$DATA_DIR/mvdm
+#cp -r /home/$USER/CS286_Project/data/overlap /user/$USER/$DATA_DIR
+mkdir -p /user/$USER/$DATA_DIR/overlap # Debug only
+#cp -r /home/$USER/CS286_Project/data/naive_bayes /user/$USER/$DATA_DIR
+
 
 # Copy the ensemble jar into the oozie lib directory.
 echo "Copy the Naive Bayes JAR to the oozie library directory."
