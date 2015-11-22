@@ -4,6 +4,8 @@ export OOZIE_DIR=oozie_flow
 export DATA_DIR=data
 export PREPROCESSOR_DIR=RecipePreprocessor
 
+export NAIVE_BAYES_DIR=NaiveBayesClassifier
+
 export ENSEMBLE_DIR=EnsembleClassifier
 
 export ACCURACY_CALC_DIR=AccuracyCalculator
@@ -29,6 +31,11 @@ echo "NOTE: ONCE THE CLASSIFICATION STEPS ARE WORKING, THIS STEP SHOULD BE COMME
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/mvdm /user/$USER/$DATA_DIR
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/overlap /user/$USER/$DATA_DIR
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/naive_bayes /user/$USER/$DATA_DIR
+
+# Copy the ensemble jar into the oozie lib directory.
+echo "Copy the Naive Bayes JAR to the oozie library directory."
+cp /home/$USER/CS286_Project/$NAIVE_BAYES_DIR/naive_bayes.jar /home/$USER/CS286_Project/$OOZIE_DIR/lib
+
 
 # Copy the ensemble jar into the oozie lib directory.
 echo "Copy the ensemble Hadoop jar to the local Oozie lib directory."

@@ -18,3 +18,6 @@ javac -classpath $CLASSPATH:$JAR_NAME -d classes NaiveBayesReducer.java
 jar -cvf $JAR_NAME -C classes/ .
 javac -classpath $CLASSPATH:$JAR_NAME -d classes NaiveBayesDriver.java
 jar -uvf $JAR_NAME -C classes/ .
+
+rm -rf classes
+echo "Naive Bayes JAR file built successfully."
