@@ -103,7 +103,7 @@ public class Preprocessor {
 		
 		// Print the training set data
 		int trainingSetSize = (int)(2.0 / 3 * recipeArr.length);
-		printRecipesToFile(trainingSetDir + "training_set.txt", recipeArr, 0, trainingSetSize, ingredientIDs, cuisines);
+		printRecipesToFile(trainingSetDir + "training_set.txt", recipeArr, 0, trainingSetSize, ingredientIDs, cuisines, true);
 		
 		// Calculate the number of records per file
 		int recordsPerFile = (recipeArr.length - trainingSetSize) / numbTestFiles;
@@ -120,7 +120,7 @@ public class Preprocessor {
 			// Will need to handle the last file differently since it will need to include the last record. 
 			if(i != numbTestFiles - 1)
 				printRecipesToFile(filePath, recipeArr, trainingSetSize + i*recordsPerFile, 
-								   trainingSetSize + (i+1)*recordsPerFile, ingredientIDs, cuisines);
+								   trainingSetSize + (i+1)*recordsPerFile, ingredientIDs, cuisines, false);
 			else
 				printRecipesToFile(filePath, recipeArr, trainingSetSize + i*recordsPerFile, 
 								   recipeArr.length, ingredientIDs, cuisines);
@@ -242,7 +242,8 @@ public class Preprocessor {
 	 * @throws IOException
 	 */
 	public static void printRecipesToFile(String filePath, Recipe[] recipes, int startLoc, int endLoc, 
-										  Map<String, Integer>ingredientIDs, List<String> cuisineIDs) throws IOException{
+					      Map<String, Integer>ingredientIDs, List<String> cuisineIDs,
+					      boolean includeHeader) throws IOException{
 		
 		
                 Path pt = new Path(filePath);
@@ -250,12 +251,14 @@ public class Preprocessor {
                 BufferedWriter fileOut = new BufferedWriter(new OutputStreamWriter(fs.create(pt, true)) );
 		
 		// Print the dataset information settings at the top of the file.
-		fileOut.write(cuisineIDs.size() + "," + ingredientIDs.size());
+		if(includeHeader)
+			fileOut.write(cuisineIDs.size() + "," + ingredientIDs.size());
 		
 		// Print one recipe at a time.
 		for(int i = startLoc; i < endLoc; i++){
 			// Put a blank line before new lines to prevent an empty blank line at the of the file.
-			fileOut.newLine();
+			if(includeHeader || i != startLoc)
+				fileOut.newLine();
 			StringBuffer sb = new StringBuffer();
 			
 			// Extract the temporary recipe
