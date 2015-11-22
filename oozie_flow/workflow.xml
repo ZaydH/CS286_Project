@@ -28,7 +28,7 @@
 			<arg>${numbProcessingNodes}</arg>
 			<arg>${cuisinesDir}</arg>
 		</java>
-		<ok to="naive_bayes"/>
+		<ok to="ml_fork"/>
 		<error to="fail"/>
 	</action>
 	
@@ -95,7 +95,7 @@
 
                         </configuration>
                 </map-reduce>
-                <ok to="ensemble"/>
+                <ok to="ml_join"/>
                 <error to="fail"/>
         </action>
 
