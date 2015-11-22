@@ -1,13 +1,16 @@
 import java.util.ArrayList;
+
+import org.apache.hadoop.io.retry.RetryPolicies.MultipleLinearRandomRetry;
 /**
  * Class having Naive Bayes classification algorithms
  * @author "Shubhangi Rakhonde, CS298, SJSU, Fall 2015"
  */
 public class NaiveBayesClassifier 
 {	
+	public static final int NORMALISER= 10;
 	/**
 	 * This function computes prior probability of each class
-	 * @param cuisineCount Array of Integer having count of each cuisine
+	 * @param cuisineCount An array having count of recipes for each cuisine in training set
 	 * @param trainingCount Total number of elements in training set
 	 * @return Double[] an array of prior probabilities
 	 */
@@ -22,13 +25,13 @@ public class NaiveBayesClassifier
 	}
 	
 	/**
-	 * This function computes the likelihood of each ingredient in given cuisine
+	 * This function computes the likelihood of each ingredient in given cuisine using Multinomial method
 	 * @param ingrCount An array having counts for each ingredient in each cuisine
 	 * @param ingrCountForCuisine An array having total count of ingredients in each cuisine
 	 * @param ingrTotal Total number of ingredients
 	 * @return Double[][] likelihood probabilities of each ingredient in each cuisine
 	 */
-	public static Double[][] computeLikelihoods(Integer[][] ingrCount, Integer[] ingrCountForCuisine, int ingrTotal)
+	public static Double[][] computeLikelihoodsMultinomial(Integer[][] ingrCount, Integer[] ingrCountForCuisine, int ingrTotal)
 	{
 		Double[][]ingrProbability = new Double[ingrCount.length][ingrCount[0].length];
 		for (int i = 0; i < ingrCount.length; i++)
@@ -42,6 +45,35 @@ public class NaiveBayesClassifier
 		return ingrProbability;
 	}
 	
+	
+	/**
+	 * This function computes the likelihood of each ingredient in given cuisine using Bernoulli method
+	 * @param cuisineCount An array having count of recipes for each cuisine in training set
+	 * @param ingrCount Integer[i][j] Counts of ingredient j in cuisine i
+	 * @param ingrCountForCuisine Integer[i] Total number of ingredients in cuisine i
+	 * @param recipeCountForIngr Integer[i][j] Number of recipes in training set that has ingredient j for cuisine i
+	 * @param cuisineTotal Total number of cuisine for given model
+	 * @return
+	 */
+	public static Double[][] computeLikelihoodsBernoulli(Integer[] cuisineCount, Integer[][] ingrCount, Integer[] ingrCountForCuisine, Integer[][] recipeCountForIngr, int cuisineTotal)
+	{
+		Double[][]ingrProbability = new Double[ingrCount.length][ingrCount[0].length];
+		for (int i = 0; i < ingrCount.length; i++) 
+		{
+			for (int j = 0; j < ingrCount[0].length; j++)
+			{
+				if(ingrCount[i][j] == 0)
+				{
+					ingrProbability[i][j] = 1 - (recipeCountForIngr[i][j]+1.0)/(cuisineCount[i]+ingrCount.length);
+				}
+				else
+				{
+					ingrProbability[i][j] = (recipeCountForIngr[i][j]+1.0)/(cuisineCount[i]+cuisineTotal);
+				}
+			}
+		}
+		return ingrProbability;
+	}
 	/**
 	 * This function computes the posterior probability of a cuisine given a set of vectors
 	 * @param testSet An arraylist of test set elements
@@ -60,7 +92,7 @@ public class NaiveBayesClassifier
 				for (int k = 0; k < testSet.size(); k++)
 				{
 					int testIngrId = testSet.get(k);
-					pOfCuisineGivenIngr += Math.log(likelihoods[j][testIngrId]);
+					pOfCuisineGivenIngr += Math.log(likelihoods[j][testIngrId])+NORMALISER;
 				}
 				logPosteriors[j] = pOfCuisineGivenIngr;
 			}	
@@ -119,7 +151,7 @@ public class NaiveBayesClassifier
 			}
 			else 
 			{
-				out.append("");
+				out.append(",");
 				out.append(arr[i]);
 			}
 		}
