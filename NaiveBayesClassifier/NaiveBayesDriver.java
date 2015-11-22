@@ -35,8 +35,11 @@ public class NaiveBayesDriver extends Configured implements Tool
 	 */
 	public int run(String[] args) throws Exception
 	{
-		 // check the CLI
-		System.out.println("Dont forget to Check the command line arguments");
+		//Check CLI
+//		if (args.length != 3) {
+//	         System.err.printf("usage: %s [generic options] <Training_Set_File> <Testing_Set_Directory> <Output_Directory>\n", getClass().getSimpleName());
+//	         System.exit(1);
+//	      }
 		getConf().set("trainingFile",args[0]);
 		Job job = new Job(getConf(), "build NB Classifier");
 		job.setJarByClass(NaiveBayesDriver.class);
