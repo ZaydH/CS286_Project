@@ -120,10 +120,10 @@ public class Preprocessor {
 			// Will need to handle the last file differently since it will need to include the last record. 
 			if(i != numbTestFiles - 1)
 				printRecipesToFile(filePath, recipeArr, trainingSetSize + i*recordsPerFile, 
-								   trainingSetSize + (i+1)*recordsPerFile, ingredientIDs, cuisines, false);
+						   trainingSetSize + (i+1)*recordsPerFile, ingredientIDs, cuisines, false);
 			else
 				printRecipesToFile(filePath, recipeArr, trainingSetSize + i*recordsPerFile, 
-								   recipeArr.length, ingredientIDs, cuisines);
+						   recipeArr.length, ingredientIDs, cuisines, false);
 		}
 	}
 	
