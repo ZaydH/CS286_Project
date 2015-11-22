@@ -16,3 +16,6 @@ javac -d classes EnsembleReducer.java
 jar -cvf $JAR_NAME -C classes/ .
 javac -classpath $CLASSPATH:$JAR_NAME -d classes EnsembleDriver.java
 jar -uvf $JAR_NAME -C classes/ .
+
+# Cleanup
+rm -rf classes

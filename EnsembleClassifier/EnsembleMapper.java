@@ -15,7 +15,8 @@ public class EnsembleMapper extends Mapper <LongWritable,Text,Text,Text> {
 	public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
     
 		// Split the input text by commas.
-		String[] splitValues = value.toString().split(",");
+		String[] splitKeyIfExists = value.toString().split("\t");
+		String[] splitValues = splitKeyIfExists[splitKeyIfExists.length - 1].toString().split(",");
 		
 		double sumOfCuisineVals = 0;
 		for(int j = 2; j < splitValues.length; j++)
