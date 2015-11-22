@@ -58,10 +58,10 @@ public class NaiveBayesMapper extends Mapper<LongWritable, Text, Text, Text>
 		//String trainingFile = "/Users/shubhangi/Documents/CS286_Project/RecipePreprocessor/training_set/training_set.txt";
 		
 		//Read the training data and build the classifier : Uncomment 3 lines and comment 4th
-//		Path p = new Path(trainingFile);
-//		FileSystem fs = FileSystem.get(new Configuration());
-//		BufferedReader training = new BufferedReader(new InputStreamReader(fs.open(p)));
-		BufferedReader training = new BufferedReader(new FileReader(trainingFile));
+		Path p = new Path(trainingFile);
+		FileSystem fs = FileSystem.get(new Configuration());
+		BufferedReader training = new BufferedReader(new InputStreamReader(fs.open(p)));
+		//BufferedReader training = new BufferedReader(new FileReader(trainingFile));
 
 		while ((thisLine = training.readLine()) != null)
 		{
