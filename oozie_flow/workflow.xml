@@ -32,11 +32,12 @@
 		<error to="fail"/>
 	</action>
 	
-	<fork>
-		<path start="naive_bayes">
+	<fork name="ml_fork">
+		<path start="naive_bayes"/>
+		<path start="ml_join"/>
 	</fork>
 
-        <action name="ensemble">
+        <action name="naive_bayes">
                 <map-reduce>
                         <job-tracker>${jobTracker}</job-tracker>
                         <name-node>${nameNode}</name-node>
@@ -95,7 +96,7 @@
 
 
 
-	<join name="ml_join" to="ensemble">
+	<join name="ml_join" to="ensemble"/>
         <action name="ensemble">
                 <map-reduce>
                         <job-tracker>${jobTracker}</job-tracker>
