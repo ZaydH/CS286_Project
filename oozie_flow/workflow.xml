@@ -57,11 +57,11 @@
 
                                 <property>
                                         <name>mapreduce.job.map.class</name>
-                                        <value>NaiveBayesMapper.java</value>
+                                        <value>NaiveBayesMapper</value>
                                 </property>
                                 <property>
                                         <name>mapreduce.job.reduce.class</name>
-                                        <value>NaiveBayesReducer.java</value>
+                                        <value>NaiveBayesReducer</value>
                                 </property>
 
                                 <property>
