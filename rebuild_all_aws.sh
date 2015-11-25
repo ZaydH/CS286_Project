@@ -49,7 +49,7 @@ cp /home/$USER/CS286_Project/$ACCURACY_CALC_DIR/accuracy_calc.jar /home/$USER/CS
 
 
 # Last Step - Copy the local Oozie flow directory to the /user/user01 directory.
-echo "Copy the oozie program to /user/${USER}/{$OOZIE_DIR}"
+echo "Copy the oozie program to /user/${USER}/${OOZIE_DIR}"
 hadoop fs -rmr /user/$USER/$OOZIE_DIR >/dev/null
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/$OOZIE_DIR /user/$USER/
 echo "Building of Oozie flow is completed."
