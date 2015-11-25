@@ -89,6 +89,12 @@
                                         <value>${naiveBayesResultsDir}</value>
                                 </property>
 
+
+				<property>
+					<name>mapred.tasktracker.map.tasks.maximum</name>
+					<value>10</value>
+				</property>
+
                                 <property>
                                         <name>trainingFile</name>
                                         <value>${trainingSetFile}</value>
@@ -154,6 +160,13 @@
 					<name>mapreduce.output.fileoutputformat.outputdir</name>
 					<value>${ensembleResultsDir}</value>
 				</property>
+
+
+                                <property>
+					<name>mapred.tasktracker.map.tasks.maximum</name>
+                                	<value>10</value>
+                                </property>
+
 
                         </configuration>
                 </map-reduce>
