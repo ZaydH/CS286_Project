@@ -92,7 +92,7 @@
 
 				<property>
 					<name>mapred.tasktracker.map.tasks.maximum</name>
-					<value>10</value>
+					<value>50</value>
 				</property>
 
                                 <property>
@@ -164,7 +164,7 @@
 
                                 <property>
 					<name>mapred.tasktracker.map.tasks.maximum</name>
-                                	<value>10</value>
+                                	<value>50</value>
                                 </property>
 
 
@@ -225,6 +225,12 @@
                                         <name>mapreduce.output.fileoutputformat.outputdir</name>
                                         <value>${accuracyResultsDir}</value>
                                 </property>
+
+                                <property>
+                                	<name>mapred.tasktracker.map.tasks.maximum</name>
+                                        <value>50</value>
+                                </property>
+
 
                         </configuration>
                 </map-reduce>
