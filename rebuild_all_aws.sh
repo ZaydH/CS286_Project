@@ -31,7 +31,7 @@ echo "NOTE: ONCE THE CLASSIFICATION STEPS ARE WORKING, THIS STEP SHOULD BE COMME
 #hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/mvdm /user/$USER/$DATA_DIR
 hadoop fs -mkdir /user/$USER/$DATA_DIR/mvdm
 #hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/overlap /user/$USER/$DATA_DIR
-#hadoop fs -mkdir /user/$USER/$DATA_DIR/overlap
+hadoop fs -mkdir /user/$USER/$DATA_DIR/overlap
 #hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/naive_bayes /user/$USER/$DATA_DIR
 
 # Copy the ensemble jar into the oozie lib directory.
