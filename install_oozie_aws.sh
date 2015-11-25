@@ -2,13 +2,13 @@ sudo su
 
 hadoop fs -chmod -R 777 /user
 
-export OOZIE_IP="ip-10-0-0-139.us-west-1.compute.internal"
+export OOZIE_IP="ip-10-0-0-149.us-west-2.compute.internal"
 
 yum install -y mapr-oozie 
 sudo service mapr-warden restart
 export OOZIE_URL="http://${OOZIE_IP}:11000/oozie"
 
-/opt/mapr/oozie/oozie-4.1.0/bin/oozie admin -status
+/opt/mapr/oozie/oozie-4.2.0/bin/oozie admin -status
 
 # Update Job tracker to jobTracker=<OOZIE_IP>:8032
 # Update OOZIE_HOME to 4.2.0
@@ -21,8 +21,8 @@ export OOZIE_URL="http://${OOZIE_IP}:11000/oozie"
 
 # It is best to always update the computer name (eg. "ip-10-0-0-115.us-west-2.compute.internal" before running this script).
 
-su ec2-user
-git clone https://<YourUsername>@github.com/ZaydH/CS286_Project.git
-cd CS286_Project
+#su ec2-user
+#git clone https://<YourUsername>@github.com/ZaydH/CS286_Project.git
+cd /home/ec2-user/CS286_Project
 bash rebuild_all_aws.bash
 bash oozie_flow/oozie_flow_aws.bash
