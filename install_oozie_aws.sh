@@ -8,7 +8,7 @@ yum install -y mapr-oozie
 sudo service mapr-warden restart
 export OOZIE_URL="http://${OOZIE_IP}:11000/oozie"
 
-/opt/mapr/oozie/oozie-4.2.0/bin/oozie admin -status
+/opt/mapr/oozie/oozie-4.1.0/bin/oozie admin -status
 
 # Update Job tracker to jobTracker=<OOZIE_IP>:8032
 # Update OOZIE_HOME to 4.2.0
@@ -19,6 +19,7 @@ export OOZIE_URL="http://${OOZIE_IP}:11000/oozie"
 
 # May need to reinstall Maven for the preprocessor.  See here: http://preilly.me/2013/05/10/how-to-install-maven-on-centos/
 
+# It is best to always update the computer name (eg. "ip-10-0-0-115.us-west-2.compute.internal" before running this script).
 
 su ec2-user
 git clone https://<YourUsername>@github.com/ZaydH/CS286_Project.git
