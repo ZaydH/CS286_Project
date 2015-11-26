@@ -120,11 +120,11 @@
 
                                 <property>
                                         <name>mapreduce.job.map.class</name>
-                                        <value>NaiveBayesMapper</value>
+                                        <value>zayd_hammoudeh.KnnRecipeMapper</value>
                                 </property>
                                 <property>
                                         <name>mapreduce.job.reduce.class</name>
-                                        <value>NaiveBayesReducer</value>
+                                        <value>zayd_hammoudeh.KnnRecipeReducer</value>
                                 </property>
 
                                 <property>
