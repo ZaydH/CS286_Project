@@ -5,9 +5,9 @@ export DATA_DIR=data
 export PREPROCESSOR_DIR=RecipePreprocessor
 
 export NAIVE_BAYES_DIR=NaiveBayesClassifier
+export KNN_DIR=KNN_Recipe
 
 export ENSEMBLE_DIR=EnsembleClassifier
-
 export ACCURACY_CALC_DIR=AccuracyCalculator
 
 # Remake the oozie lib directory from scratch.
@@ -34,10 +34,13 @@ hadoop fs -mkdir /user/$USER/$DATA_DIR/mvdm
 hadoop fs -mkdir /user/$USER/$DATA_DIR/overlap
 #hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/naive_bayes /user/$USER/$DATA_DIR
 
-# Copy the ensemble jar into the oozie lib directory.
+# Copy the naive Bayes jar into the oozie lib directory.
 echo "Copy the Naive Bayes JAR to the oozie library directory."
 cp /home/$USER/CS286_Project/$NAIVE_BAYES_DIR/naive_bayes.jar /home/$USER/CS286_Project/$OOZIE_DIR/lib
 
+# Copy the KNN jar into the oozie lib directory.
+echo "Copy the KNN JAR to the oozie library directory."
+cp /home/$USER/CS286_Project/$KNN_DIR/knn.jar /home/$USER/CS286_Project/$OOZIE_DIR/lib
 
 # Copy the ensemble jar into the oozie lib directory.
 echo "Copy the ensemble Hadoop jar to the local Oozie lib directory."
