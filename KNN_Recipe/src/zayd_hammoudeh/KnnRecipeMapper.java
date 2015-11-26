@@ -255,8 +255,9 @@ public class KnnRecipeMapper  extends Mapper <LongWritable,Text,Text,Text> {
 						matches++;
 			
 			//Return the distance as a negative since it makes the math easier and KNN is based off minimum distance
-			overlapDis = 1.0 * matches / Math.min(r1.ingredients.length, r2.ingredients.length);
-			return -1*overlapDis;
+			// Also I changed to Jaccard here.
+			overlapDis = -1.0 * matches / (r1.ingredients.length + r2.ingredients.length);
+			return overlapDis;
 		}
 	}
 }
