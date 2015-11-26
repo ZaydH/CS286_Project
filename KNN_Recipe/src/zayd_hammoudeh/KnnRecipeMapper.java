@@ -186,7 +186,7 @@ public class KnnRecipeMapper  extends Mapper <LongWritable,Text,Text,Text> {
 	
 	
 	class MVDM implements RecipeDistance {
-		Hashtable<String, Double> interIngredDistance = new Hashtable<String,Double>();
+		//Hashtable<String, Double> interIngredDistance = new Hashtable<String,Double>();
 		
 		public double dist(Recipe r1, Recipe r2){
 			
@@ -208,11 +208,11 @@ public class KnnRecipeMapper  extends Mapper <LongWritable,Text,Text,Text> {
 					ingredientPairs++; // Increment number of valid ingredient pairs
 					
 					String distKey = r1.ingredients[i] + "_" + r2.ingredients[j];
-					Double tempInterIngredDist = interIngredDistance.get(distKey);
-					if(tempInterIngredDist != null){
-						totalDistSum += tempInterIngredDist;
-						continue;
-					}
+					//Double tempInterIngredDist = interIngredDistance.get(distKey);
+					//if(tempInterIngredDist != null){
+					//	totalDistSum += tempInterIngredDist;
+					//	continue;
+					//}
 					
 					// Recalculate the number of times each recipe has been used
 					int r1IngredientSum = 0, r2IngredientSum = 0;
@@ -228,10 +228,10 @@ public class KnnRecipeMapper  extends Mapper <LongWritable,Text,Text,Text> {
 					totalDistSum += tempDist;
 					
 					//Update the lookup table.  Implementation here is lazy.  Should have a unique key.  In this case, adding both key pairs
-					distKey = r1.ingredients[i] + "_" + r2.ingredients[j];
-					interIngredDistance.put(distKey, new Double(tempDist));
-					distKey = r2.ingredients[j] + "_" + r1.ingredients[i];
-					interIngredDistance.put(distKey, new Double(tempDist));
+					//distKey = r1.ingredients[i] + "_" + r2.ingredients[j];
+					//interIngredDistance.put(distKey, new Double(tempDist));
+					//distKey = r2.ingredients[j] + "_" + r1.ingredients[i];
+					//interIngredDistance.put(distKey, new Double(tempDist));
 					
 				}
 			}

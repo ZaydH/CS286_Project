@@ -28,7 +28,7 @@
 			<arg>${numbProcessingNodes}</arg>
 			<arg>${cuisinesDir}</arg>
 		</java>
-		<ok to="ml_fork"/>
+		<ok to=""/>
 		<error to="fail"/>
 	</action>
 
@@ -36,7 +36,6 @@
         <fork name="ml_fork">
                 <path start="naive_bayes"/>
                 <path start="overlap"/>
-                <path start="mvdm"/>
         </fork>
 
         <action name="naive_bayes">
