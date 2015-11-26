@@ -28,7 +28,7 @@
 			<arg>${numbProcessingNodes}</arg>
 			<arg>${cuisinesDir}</arg>
 		</java>
-		<ok to="ml_fork"/>
+		<ok to="naive_bayes"/>
 		<error to="fail"/>
 	</action>
 
@@ -103,7 +103,7 @@
 
                         </configuration>
                 </map-reduce>
-                <ok to="ml_join"/>
+                <ok to="overlap"/>
                 <error to="fail"/>
         </action>
 
@@ -173,7 +173,7 @@
 
                         </configuration>
                 </map-reduce>
-                <ok to="ml_join"/>
+                <ok to="ensemble"/>
                 <error to="fail"/>
         </action>
 
@@ -246,7 +246,7 @@
 
                         </configuration>
                 </map-reduce>
-                <ok to="ensemble"/>
+                <ok to="ml_join"/>
                 <error to="fail"/>
         </action>
 
