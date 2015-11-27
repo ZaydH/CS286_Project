@@ -26,12 +26,12 @@ hadoop fs -mkdir -p /user/$USER/$DATA_DIR
 hadoop fs -copyFromLocal /home/$USER/CS286_Project/RecipePreprocessor/train.json /user/$USER/$DATA_DIR
 
 # Copy over the ensemble testing data
-echo "For debug purposes, copy dummy test data to the program output directories."
-echo "NOTE: ONCE THE CLASSIFICATION STEPS ARE WORKING, THIS STEP SHOULD BE COMMENTED OUT."
+#echo "For debug purposes, copy dummy test data to the program output directories."
+#echo "NOTE: ONCE THE CLASSIFICATION STEPS ARE WORKING, THIS STEP SHOULD BE COMMENTED OUT."
 #hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/mvdm /user/$USER/$DATA_DIR
-hadoop fs -mkdir /user/$USER/$DATA_DIR/mvdm
+#hadoop fs -mkdir /user/$USER/$DATA_DIR/mvdm
 #hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/overlap /user/$USER/$DATA_DIR
-hadoop fs -mkdir /user/$USER/$DATA_DIR/overlap
+#hadoop fs -mkdir /user/$USER/$DATA_DIR/overlap
 #hadoop fs -copyFromLocal /home/$USER/CS286_Project/data/naive_bayes /user/$USER/$DATA_DIR
 
 # Copy the naive Bayes jar into the oozie lib directory.
@@ -43,11 +43,11 @@ echo "Copy the KNN JAR to the oozie library directory."
 cp /home/$USER/CS286_Project/$KNN_DIR/knn.jar /home/$USER/CS286_Project/$OOZIE_DIR/lib
 
 # Copy the ensemble jar into the oozie lib directory.
-echo "Copy the ensemble Hadoop jar to the local Oozie lib directory."
+echo "Copy the ensemble JAR to the local Oozie lib directory."
 cp /home/$USER/CS286_Project/$ENSEMBLE_DIR/ensemble.jar /home/$USER/CS286_Project/$OOZIE_DIR/lib
 
 # Copy the accuracy calculator jar into the oozie lib directory.
-echo "Copy the accuracy calculator Hadoop jar to the local Oozie lib directory."
+echo "Copy the accuracy calculator JAR to the local Oozie lib directory."
 cp /home/$USER/CS286_Project/$ACCURACY_CALC_DIR/accuracy_calc.jar /home/$USER/CS286_Project/$OOZIE_DIR/lib
 
 
