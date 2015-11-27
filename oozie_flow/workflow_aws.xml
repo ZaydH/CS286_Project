@@ -28,9 +28,234 @@
 			<arg>${numbProcessingNodes}</arg>
 			<arg>${cuisinesDir}</arg>
 		</java>
-		<ok to="ensemble"/>
+		<ok to="ml_fork"/>
 		<error to="fail"/>
 	</action>
+
+
+        <fork name="ml_fork">
+                <path start="naive_bayes"/>
+                <path start="overlap"/>
+                <path start="mvdm"/>
+        </fork>
+
+        <action name="naive_bayes">
+                <map-reduce>
+                        <job-tracker>${jobTracker}</job-tracker>
+                        <name-node>${nameNode}</name-node>
+
+                        <prepare>
+                                <delete path="${naiveBayesResultsDir}"/>
+                        </prepare>
+
+                        <configuration>
+                                <property>
+                                        <name>mapred.mapper.new-api</name>
+                                        <value>true</value>
+                                </property>
+                                <property>
+                                        <name>mapred.reducer.new-api</name>
+                                        <value>true</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.map.class</name>
+                                        <value>NaiveBayesMapper</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.reduce.class</name>
+                                        <value>NaiveBayesReducer</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.inputformat.class</name>
+                                        <value>org.apache.hadoop.mapreduce.lib.input.TextInputFormat</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.key.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.value.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+
+
+                                <property>
+                                        <name>mapreduce.input.fileinputformat.inputdir</name>
+                                        <value>${testSetDir}</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.output.fileoutputformat.outputdir</name>
+                                        <value>${naiveBayesResultsDir}</value>
+                                </property>
+
+
+				<property>
+					<name>mapred.tasktracker.map.tasks.maximum</name>
+					<value>50</value>
+				</property>
+
+                                <property>
+                                        <name>trainingFile</name>
+                                        <value>${trainingSetFile}</value>
+                                </property>
+
+                        </configuration>
+                </map-reduce>
+                <ok to="ml_join"/>
+                <error to="fail"/>
+        </action>
+
+        <action name="overlap">
+                <map-reduce>
+                        <job-tracker>${jobTracker}</job-tracker>
+                        <name-node>${nameNode}</name-node>
+
+                        <prepare>
+                                <delete path="${overlapResultsDir}"/>
+                        </prepare>
+
+                        <configuration>
+                                <property>
+                                        <name>mapred.mapper.new-api</name>
+                                        <value>true</value>
+                                </property>
+                                <property>
+                                        <name>mapred.reducer.new-api</name>
+                                        <value>true</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.map.class</name>
+                                        <value>zayd_hammoudeh.KnnRecipeMapper</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.reduce.class</name>
+                                        <value>zayd_hammoudeh.KnnRecipeReducer</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.inputformat.class</name>
+                                        <value>org.apache.hadoop.mapreduce.lib.input.TextInputFormat</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.key.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.value.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+
+
+                                <property>
+                                        <name>mapreduce.input.fileinputformat.inputdir</name>
+                                        <value>${testSetDir}</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.output.fileoutputformat.outputdir</name>
+                                        <value>${overlapResultsDir}</value>
+                                </property>
+
+                                <property>
+                                        <name>trainingFile</name>
+                                        <value>${trainingSetFile}</value>
+                                </property>
+                                <property>
+                                        <name>kValue</name>
+                                        <value>15</value>
+                                </property>
+                                <property>
+                                        <name>distanceMetric</name>
+                                        <value>overlap</value>
+                                </property>
+
+                        </configuration>
+                </map-reduce>
+                <ok to="ml_join"/>
+                <error to="fail"/>
+        </action>
+
+
+
+        <action name="mvdm">
+                <map-reduce>
+                        <job-tracker>${jobTracker}</job-tracker>
+                        <name-node>${nameNode}</name-node>
+
+                        <prepare>
+                                <delete path="${mvdmResultsDir}"/>
+                        </prepare>
+
+                        <configuration>
+                                <property>
+                                        <name>mapred.mapper.new-api</name>
+                                        <value>true</value>
+                                </property>
+                                <property>
+                                        <name>mapred.reducer.new-api</name>
+                                        <value>true</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.map.class</name>
+                                        <value>zayd_hammoudeh.KnnRecipeMapper</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.reduce.class</name>
+                                        <value>zayd_hammoudeh.KnnRecipeReducer</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.inputformat.class</name>
+                                        <value>org.apache.hadoop.mapreduce.lib.input.TextInputFormat</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.key.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.value.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+
+
+                                <property>
+                                        <name>mapreduce.input.fileinputformat.inputdir</name>
+                                        <value>${testSetDir}</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.output.fileoutputformat.outputdir</name>
+                                        <value>${mvdmResultsDir}</value>
+                                </property>
+
+
+                                <property>
+                                        <name>trainingFile</name>
+                                        <value>${trainingSetFile}</value>
+                                </property>
+                                <property>
+                                        <name>kValue</name>
+                                        <value>15</value>
+                                </property>
+                                <property>
+                                        <name>distanceMetric</name>
+                                        <value>mvdm</value>
+                                </property>
+
+                        </configuration>
+                </map-reduce>
+                <ok to="ml_join"/>
+                <error to="fail"/>
+        </action>
+
+
+
+
+
+        <join name="ml_join" to="ensemble"/>
+
 
         <action name="ensemble">
                 <map-reduce>
@@ -82,6 +307,13 @@
 					<name>mapreduce.output.fileoutputformat.outputdir</name>
 					<value>${ensembleResultsDir}</value>
 				</property>
+
+
+                                <property>
+					<name>mapred.tasktracker.map.tasks.maximum</name>
+                                	<value>50</value>
+                                </property>
+
 
                         </configuration>
                 </map-reduce>
@@ -140,6 +372,12 @@
                                         <name>mapreduce.output.fileoutputformat.outputdir</name>
                                         <value>${accuracyResultsDir}</value>
                                 </property>
+
+                                <property>
+                                	<name>mapred.tasktracker.map.tasks.maximum</name>
+                                        <value>50</value>
+                                </property>
+
 
                         </configuration>
                 </map-reduce>

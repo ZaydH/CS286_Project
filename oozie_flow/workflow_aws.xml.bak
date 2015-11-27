@@ -28,14 +28,15 @@
 			<arg>${numbProcessingNodes}</arg>
 			<arg>${cuisinesDir}</arg>
 		</java>
-		<ok to="naive_bayes"/>
+		<ok to=""/>
 		<error to="fail"/>
 	</action>
-	
-	<fork name="ml_fork">
-		<path start="naive_bayes"/>
-		<path start="overlap"/>
-	</fork>
+
+
+        <fork name="ml_fork">
+                <path start="naive_bayes"/>
+                <path start="overlap"/>
+        </fork>
 
         <action name="naive_bayes">
                 <map-reduce>
@@ -88,19 +89,20 @@
                                         <value>${naiveBayesResultsDir}</value>
                                 </property>
 
-                                <property>
-                                        <name>mapred.tasktracker.map.tasks.maximum</name>
-                                        <value>50</value>
-                                </property>
 
 				<property>
-					<name>trainingFile</name>
-					<value>${trainingSetFile}</value>
+					<name>mapred.tasktracker.map.tasks.maximum</name>
+					<value>50</value>
 				</property>
+
+                                <property>
+                                        <name>trainingFile</name>
+                                        <value>${trainingSetFile}</value>
+                                </property>
 
                         </configuration>
                 </map-reduce>
-                <ok to="overlap"/>
+                <ok to="ml_join"/>
                 <error to="fail"/>
         </action>
 
@@ -156,12 +158,6 @@
                                 </property>
 
                                 <property>
-                                        <name>mapred.tasktracker.map.tasks.maximum</name>
-                                        <value>50</value>
-                                </property>
-
-
-                                <property>
                                         <name>trainingFile</name>
                                         <value>${trainingSetFile}</value>
                                 </property>
@@ -176,9 +172,10 @@
 
                         </configuration>
                 </map-reduce>
-                <ok to="mvdm"/>
+                <ok to="ml_join"/>
                 <error to="fail"/>
         </action>
+
 
 
         <action name="mvdm">
@@ -248,14 +245,17 @@
 
                         </configuration>
                 </map-reduce>
-                <ok to="ensemble"/>
+                <ok to="ml_join"/>
                 <error to="fail"/>
         </action>
 
 
 
 
-	<join name="ml_join" to="ensemble"/>
+
+        <join name="ml_join" to="ensemble"/>
+
+
         <action name="ensemble">
                 <map-reduce>
                         <job-tracker>${jobTracker}</job-tracker>
@@ -306,6 +306,13 @@
 					<name>mapreduce.output.fileoutputformat.outputdir</name>
 					<value>${ensembleResultsDir}</value>
 				</property>
+
+
+                                <property>
+					<name>mapred.tasktracker.map.tasks.maximum</name>
+                                	<value>50</value>
+                                </property>
+
 
                         </configuration>
                 </map-reduce>
@@ -364,6 +371,12 @@
                                         <name>mapreduce.output.fileoutputformat.outputdir</name>
                                         <value>${accuracyResultsDir}</value>
                                 </property>
+
+                                <property>
+                                	<name>mapred.tasktracker.map.tasks.maximum</name>
+                                        <value>50</value>
+                                </property>
+
 
                         </configuration>
                 </map-reduce>
