@@ -20,7 +20,7 @@ public class NaiveBayesDriver extends Configured implements Tool
 	/**
 	 * Main function to run the map reduce job
 	 * @param args[0] = Training File path
-	 *        args[1] = Naive Bayes Model name : "bernoulli" or "multinomial"
+	 *        args[1] = Naive Bayes Model name : NaiveBayesModel = "bernoulli" or "multinomial"
 	 *        args[2] = Directory path of Testing Files
 	 *        args[3] = Directory path of output directory
 	 * @throws Exception
