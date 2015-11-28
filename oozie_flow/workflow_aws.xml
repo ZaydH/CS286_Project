@@ -102,6 +102,10 @@
                                         <value>${trainingSetFile}</value>
                                 </property>
 
+                                <property>
+                                        <name>NaiveBayesModel</name>
+                                        <value>bernoulli</value>
+                                </property>
                         </configuration>
                 </map-reduce>
                 <ok to="ml_join"/>
@@ -170,6 +174,10 @@
                                         <value>${trainingSetFile}</value>
                                 </property>
 
+                                <property>
+                                        <name>NaiveBayesModel</name>
+                                        <value>multinomial</value>
+                                </property>
                         </configuration>
                 </map-reduce>
                 <ok to="ml_join"/>
@@ -370,7 +378,7 @@
 
                                 <property>
                                         <name>mapreduce.input.fileinputformat.inputdir</name>
-                                        <value>${mvdmResultsDir},${overlapResultsDir},${naiveBayesResultsDir}</value>
+                                        <value>${mvdmResultsDir},${overlapResultsDir},${multinomialResultsDir},${bernoulliResultsDir}</value>
                                 </property>
 				<property>
 					<name>mapreduce.output.fileoutputformat.outputdir</name>
