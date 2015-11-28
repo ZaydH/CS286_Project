@@ -243,7 +243,7 @@
 
                         </configuration>
                 </map-reduce>
-                <ok to="overlap"/>
+                <ok to="mvdm"/>
                 <error to="fail"/>
         </action>
 
