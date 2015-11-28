@@ -31,12 +31,18 @@
 		<ok to="naive_bayes_start"/>
 		<error to="fail"/>
 	</action>
-	
-	<fork name="ml_fork">
-		<path start="naive_bayes_start"/>
-		<path start="overlap"/>
+
+
+
+
+        <fork name="ml_fork">
+                <path start="naive_bayes_start"/>
+                <path start="overlap"/>
                 <path start="mvdm"/>
-	</fork>
+        </fork>
+
+
+
 
         <action name="naive_bayes_start">
                 <map-reduce>
@@ -90,14 +96,9 @@
                                 </property>
 
                                 <property>
-                                        <name>mapred.tasktracker.map.tasks.maximum</name>
-                                        <value>50</value>
+                                        <name>trainingFile</name>
+                                        <value>${trainingSetFile}</value>
                                 </property>
-
-				<property>
-					<name>trainingFile</name>
-					<value>${trainingSetFile}</value>
-				</property>
 
                                 <property>
                                         <name>NaiveBayesModel</name>
@@ -165,7 +166,6 @@
                                         <name>trainingFile</name>
                                         <value>${trainingSetFile}</value>
                                 </property>
-
 
                                 <property>
                                         <name>NaiveBayesModel</name>
@@ -248,6 +248,7 @@
         </action>
 
 
+
         <action name="mvdm">
                 <map-reduce>
                         <job-tracker>${jobTracker}</job-tracker>
@@ -322,7 +323,8 @@
 
 
 
-	<join name="ml_join" to="ensemble"/>
+
+        <join name="ml_join" to="ensemble"/>
 
 
 
@@ -377,6 +379,7 @@
 					<name>mapreduce.output.fileoutputformat.outputdir</name>
 					<value>${ensembleResultsDir}</value>
 				</property>
+
 
                         </configuration>
                 </map-reduce>
@@ -435,6 +438,7 @@
                                         <name>mapreduce.output.fileoutputformat.outputdir</name>
                                         <value>${accuracyResultsDir}</value>
                                 </property>
+
 
                         </configuration>
                 </map-reduce>

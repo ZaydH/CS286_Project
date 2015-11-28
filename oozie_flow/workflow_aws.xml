@@ -34,13 +34,12 @@
 
 
         <fork name="ml_fork">
-                <path start="naive_bayes_bernoulli"/>
-                <path start="naive_bayes_multinomial"/>
+                <path start="naive_bayes_start"/>
                 <path start="overlap"/>
                 <path start="mvdm"/>
         </fork>
 
-        <action name="naive_bayes_bernoulli">
+        <action name="naive_bayes_start">
                 <map-reduce>
                         <job-tracker>${jobTracker}</job-tracker>
                         <name-node>${nameNode}</name-node>
@@ -108,7 +107,7 @@
                                 </property>
                         </configuration>
                 </map-reduce>
-                <ok to="ml_join"/>
+                <ok to="naive_bayes_multinomial"/>
                 <error to="fail"/>
         </action>
 
@@ -205,11 +204,11 @@
 
                                 <property>
                                         <name>mapreduce.job.map.class</name>
-                                        <value>zayd_hammoudeh.KnnRecipeMapper</value>
+                                        <value>KNN_YashiKamboj.KNNMapper</value>
                                 </property>
                                 <property>
                                         <name>mapreduce.job.reduce.class</name>
-                                        <value>zayd_hammoudeh.KnnRecipeReducer</value>
+                                        <value>KNN_YashiKamboj.KNNReducer</value>
                                 </property>
 
                                 <property>
@@ -240,12 +239,12 @@
                                         <value>${trainingSetFile}</value>
                                 </property>
                                 <property>
-                                        <name>kValue</name>
+                                        <name>K</name>
                                         <value>15</value>
                                 </property>
                                 <property>
                                         <name>distanceMetric</name>
-                                        <value>overlap</value>
+                                        <value>Overlap</value>
                                 </property>
 
                         </configuration>
@@ -277,11 +276,11 @@
 
                                 <property>
                                         <name>mapreduce.job.map.class</name>
-                                        <value>zayd_hammoudeh.KnnRecipeMapper</value>
+                                        <value>KNN_YashiKamboj.KNNMapper</value>
                                 </property>
                                 <property>
                                         <name>mapreduce.job.reduce.class</name>
-                                        <value>zayd_hammoudeh.KnnRecipeReducer</value>
+                                        <value>KNN_YashiKamboj.KNNReducer</value>
                                 </property>
 
                                 <property>
@@ -313,12 +312,12 @@
                                         <value>${trainingSetFile}</value>
                                 </property>
                                 <property>
-                                        <name>kValue</name>
+                                        <name>K</name>
                                         <value>15</value>
                                 </property>
                                 <property>
                                         <name>distanceMetric</name>
-                                        <value>mvdm</value>
+                                        <value>MVDM</value>
                                 </property>
 
                         </configuration>

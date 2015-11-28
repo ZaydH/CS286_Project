@@ -5,7 +5,10 @@ export DATA_DIR=data
 export PREPROCESSOR_DIR=RecipePreprocessor
 
 export NAIVE_BAYES_DIR=NaiveBayesClassifier
-export KNN_DIR=KNN_Recipe
+#export KNN_DIR=KNN_Recipe
+#export KNN_JAR=knn.jar
+export KNN_DIR=KNN_Project
+export KNN_JAR_NAME=KNN.jar
 
 export ENSEMBLE_DIR=EnsembleClassifier
 export ACCURACY_CALC_DIR=AccuracyCalculator
@@ -39,7 +42,7 @@ cp /home/$USER/CS286_Project/$NAIVE_BAYES_DIR/naive_bayes.jar /home/$USER/CS286_
 
 # Copy the KNN jar into the oozie lib directory.
 echo "Copying the KNN JAR to the oozie library directory."
-cp /home/$USER/CS286_Project/$KNN_DIR/knn.jar /home/$USER/CS286_Project/$OOZIE_DIR/lib
+cp /home/$USER/CS286_Project/$KNN_DIR/$KNN_JAR_NAME /home/$USER/CS286_Project/$OOZIE_DIR/lib
 
 # Copy the ensemble jar into the oozie lib directory.
 echo "Copying the ensemble JAR file to the oozie library directory."
