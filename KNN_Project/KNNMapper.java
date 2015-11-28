@@ -127,7 +127,6 @@ public class KNNMapper extends Mapper <LongWritable,Text,Text,Text> {
 	}
 	context.write(new Text(Integer.toString(testDataIngredients.get(0))),new Text(val.toString()));	    
     }
-    //Used Zayd's implementation of Wrapper Class in my code
     class DistanceResultsWrapper implements Comparable<DistanceResultsWrapper> {
 	double dist;
 	int cuisineNumb;

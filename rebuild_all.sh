@@ -5,7 +5,8 @@ export DATA_DIR=data
 export PREPROCESSOR_DIR=RecipePreprocessor
 
 export NAIVE_BAYES_DIR=NaiveBayesClassifier
-export KNN_DIR=KNN_Recipe
+#export KNN_DIR=KNN_Recipe
+export KNN_DIR=KNN_Project
 
 export ENSEMBLE_DIR=EnsembleClassifier
 export ACCURACY_CALC_DIR=AccuracyCalculator
