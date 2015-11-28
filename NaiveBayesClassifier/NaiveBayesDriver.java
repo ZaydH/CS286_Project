@@ -20,8 +20,9 @@ public class NaiveBayesDriver extends Configured implements Tool
 	/**
 	 * Main function to run the map reduce job
 	 * @param args[0] = Training File path
-	 *        args[1] = Directory path of Testing Files
-	 *        args[2] = Directory path of output directory
+	 *        args[1] = Naive Bayes Model name : "bernoulli" or "multinomial"
+	 *        args[2] = Directory path of Testing Files
+	 *        args[3] = Directory path of output directory
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception
@@ -41,6 +42,7 @@ public class NaiveBayesDriver extends Configured implements Tool
 //	         System.exit(1);
 //	      }
 		getConf().set("trainingFile",args[0]);
+		getConf().set("NaiveBayesModel",args[1]);
 		Job job = new Job(getConf(), "build NB Classifier");
 		job.setJarByClass(NaiveBayesDriver.class);
 		job.setMapperClass(NaiveBayesMapper.class);
@@ -51,8 +53,8 @@ public class NaiveBayesDriver extends Configured implements Tool
 		job.setOutputValueClass(Text.class);
 		
 		//setup input and output paths
-		FileInputFormat.addInputPath(job, new Path(args[1]));
-		FileOutputFormat.setOutputPath(job, new Path(args[2]));
+		FileInputFormat.addInputPath(job, new Path(args[2]));
+		FileOutputFormat.setOutputPath(job, new Path(args[3]));
 		
 		//launch job synchronously
 		return job.waitForCompletion(true) ? 0:1;
