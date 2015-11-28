@@ -54,6 +54,7 @@ public class NaiveBayesMapper extends Mapper<LongWritable, Text, Text, Text>
 		
 		//Get the training data path
 		String trainingFile = context.getConfiguration().get("trainingFile");
+		String naiveBayesModel = context.getConfiguration().get("NaiveBayesModel");
 		//System.out.println("Training file path from conf = "+trainingFile);
 		//String trainingFile = "/Users/shubhangi/Documents/CS286_Project/RecipePreprocessor/training_set/training_set.txt";
 		
@@ -119,8 +120,10 @@ public class NaiveBayesMapper extends Mapper<LongWritable, Text, Text, Text>
 //		System.out.println(NaiveBayesClassifier.prettyPrintArray(ingrCount));
 		
 		priors = NaiveBayesClassifier.computePriors(cuisineCount, trainingCount);
-		likelihoods = NaiveBayesClassifier.computeLikelihoodsMultinomial(ingrCount, ingrCountForCuisine, ingrTotal);
-		//likelihoods = NaiveBayesClassifier.computeLikelihoodsBernoulli(cuisineCount, ingrCount, ingrCountForCuisine, recipeCountForIngr, cuisineTotal);
+		if(naiveBayesModel.equals("bernoulli"))
+			likelihoods = NaiveBayesClassifier.computeLikelihoodsBernoulli(cuisineCount, ingrCount, ingrCountForCuisine, recipeCountForIngr, cuisineTotal);
+		else
+			likelihoods = NaiveBayesClassifier.computeLikelihoodsMultinomial(ingrCount, ingrCountForCuisine, ingrTotal);
 		// PRINT PRIORS and LIKELIHOODS
 //		System.out.println("=============== PRIORS ===============");
 //		System.out.println(NaiveBayesClassifier.prettyPrintArray(priors));
