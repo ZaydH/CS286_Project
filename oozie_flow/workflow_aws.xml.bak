@@ -34,17 +34,19 @@
 
 
         <fork name="ml_fork">
-                <path start="naive_bayes"/>
+                <path start="naive_bayes_bernoulli"/>
+                <path start="naive_bayes_multinomial"/>
                 <path start="overlap"/>
+                <path start="mvdm"/>
         </fork>
 
-        <action name="naive_bayes">
+        <action name="naive_bayes_bernoulli">
                 <map-reduce>
                         <job-tracker>${jobTracker}</job-tracker>
                         <name-node>${nameNode}</name-node>
 
                         <prepare>
-                                <delete path="${naiveBayesResultsDir}"/>
+                                <delete path="${bernoulliResultsDir}"/>
                         </prepare>
 
                         <configuration>
@@ -86,14 +88,82 @@
                                 </property>
                                 <property>
                                         <name>mapreduce.output.fileoutputformat.outputdir</name>
-                                        <value>${naiveBayesResultsDir}</value>
+                                        <value>${bernoulliResultsDir}</value>
                                 </property>
 
 
-				<property>
-					<name>mapred.tasktracker.map.tasks.maximum</name>
-					<value>50</value>
-				</property>
+                                <property>
+                                        <name>mapred.tasktracker.map.tasks.maximum</name>
+                                        <value>50</value>
+                                </property>
+
+                                <property>
+                                        <name>trainingFile</name>
+                                        <value>${trainingSetFile}</value>
+                                </property>
+
+                        </configuration>
+                </map-reduce>
+                <ok to="ml_join"/>
+                <error to="fail"/>
+        </action>
+
+        <action name="naive_bayes_multinomial">
+                <map-reduce>
+                        <job-tracker>${jobTracker}</job-tracker>
+                        <name-node>${nameNode}</name-node>
+
+                        <prepare>
+                                <delete path="${multinomialResultsDir}"/>
+                        </prepare>
+
+                        <configuration>
+                                <property>
+                                        <name>mapred.mapper.new-api</name>
+                                        <value>true</value>
+                                </property>
+                                <property>
+                                        <name>mapred.reducer.new-api</name>
+                                        <value>true</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.map.class</name>
+                                        <value>NaiveBayesMapper</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.reduce.class</name>
+                                        <value>NaiveBayesReducer</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.inputformat.class</name>
+                                        <value>org.apache.hadoop.mapreduce.lib.input.TextInputFormat</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.key.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.value.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+
+
+                                <property>
+                                        <name>mapreduce.input.fileinputformat.inputdir</name>
+                                        <value>${testSetDir}</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.output.fileoutputformat.outputdir</name>
+                                        <value>${multinomialResultsDir}</value>
+                                </property>
+
+
+                                <property>
+                                        <name>mapred.tasktracker.map.tasks.maximum</name>
+                                        <value>50</value>
+                                </property>
 
                                 <property>
                                         <name>trainingFile</name>
