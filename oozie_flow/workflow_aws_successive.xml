@@ -1,0 +1,456 @@
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="cs286_project">
+	<start to="preprocessor"/>
+
+	<action name="preprocessor">
+		<java>
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			
+			<prepare>
+                                <delete path="${trainingSetDir}"/>
+                                <delete path="${trainingSetDir}"/>
+                                <delete path="${cuisinesDir}"/>
+                                <mkdir path="${trainingSetDir}"/>
+                                <mkdir path="${testSetDir}"/>
+                                <mkdir path="${cuisinesDir}"/>
+			</prepare>
+
+			<configuration>
+				<property>
+					<name>mapred.job.queue.name</name>
+					<value>${queueName}</value>
+				</property>
+			</configuration>
+			<main-class>zayd_hammoudeh.Preprocessor</main-class>
+			<arg>${inputFile}</arg>
+			<arg>${trainingSetDir}</arg>
+			<arg>${testSetDir}</arg>
+			<arg>${numbProcessingNodes}</arg>
+			<arg>${cuisinesDir}</arg>
+		</java>
+		<ok to="naive_bayes_start"/>
+		<error to="fail"/>
+	</action>
+
+
+
+
+        <fork name="ml_fork">
+                <path start="naive_bayes_start"/>
+                <path start="overlap"/>
+                <path start="mvdm"/>
+        </fork>
+
+
+
+
+        <action name="naive_bayes_start">
+                <map-reduce>
+                        <job-tracker>${jobTracker}</job-tracker>
+                        <name-node>${nameNode}</name-node>
+
+                        <prepare>
+                                <delete path="${bernoulliResultsDir}"/>
+                        </prepare>
+
+                        <configuration>
+                                <property>
+                                        <name>mapred.mapper.new-api</name>
+                                        <value>true</value>
+                                </property>
+                                <property>
+                                        <name>mapred.reducer.new-api</name>
+                                        <value>true</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.map.class</name>
+                                        <value>NaiveBayesMapper</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.reduce.class</name>
+                                        <value>NaiveBayesReducer</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.inputformat.class</name>
+                                        <value>org.apache.hadoop.mapreduce.lib.input.TextInputFormat</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.key.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.value.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+
+
+                                <property>
+                                        <name>mapreduce.input.fileinputformat.inputdir</name>
+                                        <value>${testSetDir}</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.output.fileoutputformat.outputdir</name>
+                                        <value>${bernoulliResultsDir}</value>
+                                </property>
+
+                                <property>
+                                        <name>trainingFile</name>
+                                        <value>${trainingSetFile}</value>
+                                </property>
+
+                                <property>
+                                        <name>NaiveBayesModel</name>
+                                        <value>bernoulli</value>
+                                </property>
+                        </configuration>
+                </map-reduce>
+                <ok to="naive_bayes_multinomial"/>
+                <error to="fail"/>
+        </action>
+
+        <action name="naive_bayes_multinomial">
+                <map-reduce>
+                        <job-tracker>${jobTracker}</job-tracker>
+                        <name-node>${nameNode}</name-node>
+
+                        <prepare>
+                                <delete path="${multinomialResultsDir}"/>
+                        </prepare>
+
+                        <configuration>
+                                <property>
+                                        <name>mapred.mapper.new-api</name>
+                                        <value>true</value>
+                                </property>
+                                <property>
+                                        <name>mapred.reducer.new-api</name>
+                                        <value>true</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.map.class</name>
+                                        <value>NaiveBayesMapper</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.reduce.class</name>
+                                        <value>NaiveBayesReducer</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.inputformat.class</name>
+                                        <value>org.apache.hadoop.mapreduce.lib.input.TextInputFormat</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.key.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.value.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+
+
+                                <property>
+                                        <name>mapreduce.input.fileinputformat.inputdir</name>
+                                        <value>${testSetDir}</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.output.fileoutputformat.outputdir</name>
+                                        <value>${multinomialResultsDir}</value>
+                                </property>
+
+
+                                <property>
+                                        <name>trainingFile</name>
+                                        <value>${trainingSetFile}</value>
+                                </property>
+
+                                <property>
+                                        <name>NaiveBayesModel</name>
+                                        <value>multinomial</value>
+                                </property>
+                        </configuration>
+                </map-reduce>
+                <ok to="overlap"/>
+                <error to="fail"/>
+        </action>
+
+        <action name="overlap">
+                <map-reduce>
+                        <job-tracker>${jobTracker}</job-tracker>
+                        <name-node>${nameNode}</name-node>
+
+                        <prepare>
+                                <delete path="${overlapResultsDir}"/>
+                        </prepare>
+
+                        <configuration>
+                                <property>
+                                        <name>mapred.mapper.new-api</name>
+                                        <value>true</value>
+                                </property>
+                                <property>
+                                        <name>mapred.reducer.new-api</name>
+                                        <value>true</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.map.class</name>
+                                        <value>KNN_YashiKamboj.KNNMapper</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.reduce.class</name>
+                                        <value>KNN_YashiKamboj.KNNReducer</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.inputformat.class</name>
+                                        <value>org.apache.hadoop.mapreduce.lib.input.TextInputFormat</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.key.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.value.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+
+
+                                <property>
+                                        <name>mapreduce.input.fileinputformat.inputdir</name>
+                                        <value>${testSetDir}</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.output.fileoutputformat.outputdir</name>
+                                        <value>${overlapResultsDir}</value>
+                                </property>
+
+                                <property>
+                                        <name>trainingFile</name>
+                                        <value>${trainingSetFile}</value>
+                                </property>
+                                <property>
+                                        <name>K</name>
+                                        <value>15</value>
+                                </property>
+                                <property>
+                                        <name>distanceMetric</name>
+                                        <value>Overlap</value>
+                                </property>
+
+                        </configuration>
+                </map-reduce>
+                <ok to="overlap"/>
+                <error to="fail"/>
+        </action>
+
+
+
+        <action name="mvdm">
+                <map-reduce>
+                        <job-tracker>${jobTracker}</job-tracker>
+                        <name-node>${nameNode}</name-node>
+
+                        <prepare>
+                                <delete path="${mvdmResultsDir}"/>
+                        </prepare>
+
+                        <configuration>
+                                <property>
+                                        <name>mapred.mapper.new-api</name>
+                                        <value>true</value>
+                                </property>
+                                <property>
+                                        <name>mapred.reducer.new-api</name>
+                                        <value>true</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.map.class</name>
+                                        <value>KNN_YashiKamboj.KNNMapper</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.reduce.class</name>
+                                        <value>KNN_YashiKamboj.KNNReducer</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.inputformat.class</name>
+                                        <value>org.apache.hadoop.mapreduce.lib.input.TextInputFormat</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.key.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.output.value.class</name>
+                                        <value>org.apache.hadoop.io.Text</value>
+                                </property>
+
+
+                                <property>
+                                        <name>mapreduce.input.fileinputformat.inputdir</name>
+                                        <value>${testSetDir}</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.output.fileoutputformat.outputdir</name>
+                                        <value>${mvdmResultsDir}</value>
+                                </property>
+
+
+                                <property>
+                                        <name>trainingFile</name>
+                                        <value>${trainingSetFile}</value>
+                                </property>
+                                <property>
+                                        <name>K</name>
+                                        <value>15</value>
+                                </property>
+                                <property>
+                                        <name>distanceMetric</name>
+                                        <value>MVDM</value>
+                                </property>
+
+                        </configuration>
+                </map-reduce>
+                <ok to="ensemble"/>
+                <error to="fail"/>
+        </action>
+
+
+
+
+
+        <join name="ml_join" to="ensemble"/>
+
+
+
+
+        <action name="ensemble">
+                <map-reduce>
+                        <job-tracker>${jobTracker}</job-tracker>
+                        <name-node>${nameNode}</name-node>
+
+                        <prepare>
+                                <delete path="${ensembleResultsDir}"/>
+                        </prepare>
+
+                        <configuration>
+				<property>
+                                        <name>mapred.mapper.new-api</name>
+                                        <value>true</value>
+                                </property>
+                                <property>
+                                        <name>mapred.reducer.new-api</name>
+                                        <value>true</value>
+                                </property>
+
+				<property>
+					<name>mapreduce.job.map.class</name>
+					<value>Ensemble.EnsembleMapper</value>
+				</property>
+				<property>
+					<name>mapreduce.job.reduce.class</name>
+					<value>Ensemble.EnsembleReducer</value>
+				</property>
+
+                		<property>
+		                	<name>mapreduce.job.inputformat.class</name>
+                			<value>org.apache.hadoop.mapreduce.lib.input.TextInputFormat</value>
+		                </property>
+		                <property>
+                			<name>mapreduce.job.output.key.class</name>
+		                	<value>org.apache.hadoop.io.Text</value>
+		                </property>
+	                	<property>
+        		        	<name>mapreduce.job.output.value.class</name>
+	        	        	<value>org.apache.hadoop.io.Text</value>
+        	        	</property>
+
+
+                                <property>
+                                        <name>mapreduce.input.fileinputformat.inputdir</name>
+                                        <value>${mvdmResultsDir},${overlapResultsDir},${multinomialResultsDir},${bernoulliResultsDir}</value>
+                                </property>
+				<property>
+					<name>mapreduce.output.fileoutputformat.outputdir</name>
+					<value>${ensembleResultsDir}</value>
+				</property>
+
+
+                        </configuration>
+                </map-reduce>
+                <ok to="accuracy_calc"/>
+                <error to="fail"/>
+        </action>
+
+
+        <action name="accuracy_calc">
+                <map-reduce>
+                        <job-tracker>${jobTracker}</job-tracker>
+                        <name-node>${nameNode}</name-node>
+
+                        <prepare>
+                                <delete path="${accuracyResultsDir}"/>
+                        </prepare>
+
+                        <configuration>
+                                <property>
+                                        <name>mapred.mapper.new-api</name>
+                                        <value>true</value>
+                                </property>
+                                <property>
+                                        <name>mapred.reducer.new-api</name>
+                                        <value>true</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.map.class</name>
+                                        <value>Accuracy.AccuracyCalcMapper</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.job.reduce.class</name>
+                                        <value>Accuracy.AccuracyCalcReducer</value>
+                                </property>
+
+                                <property>
+                                        <name>mapreduce.job.inputformat.class</name>
+                                        <value>org.apache.hadoop.mapreduce.lib.input.TextInputFormat</value>
+                                </property>
+                                <property>
+                                	<name>mapreduce.job.output.key.class</name>
+                                	<value>org.apache.hadoop.io.Text</value>
+                                </property>
+                                <property>
+                                	<name>mapreduce.job.output.value.class</name>
+                                	<value>org.apache.hadoop.io.Text</value>
+                                </property>
+
+
+                                <property>
+                                        <name>mapreduce.input.fileinputformat.inputdir</name>
+                                        <value>${ensembleResultsDir}</value>
+                                </property>
+                                <property>
+                                        <name>mapreduce.output.fileoutputformat.outputdir</name>
+                                        <value>${accuracyResultsDir}</value>
+                                </property>
+
+
+                        </configuration>
+                </map-reduce>
+                <ok to="end"/>
+                <error to="fail"/>
+        </action>
+
+
+	<kill name="fail">
+		<message>CS286 Recipes Project Failed: [${wf:errorMessage(wf:lastErrorNode())}]</message>
+	</kill>
+
+	<end name="end"/>
+</workflow-app>
+
