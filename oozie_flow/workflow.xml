@@ -38,7 +38,7 @@
                 <path start="mvdm"/>
 	</fork>
 
-        <action name="naive_bayes_start">>
+        <action name="naive_bayes_start">
                 <map-reduce>
                         <job-tracker>${jobTracker}</job-tracker>
                         <name-node>${nameNode}</name-node>
@@ -238,7 +238,7 @@
                                 </property>
                                 <property>
                                         <name>distanceMetric</name>
-                                        <value>overlap</value>
+                                        <value>Overlap</value>
                                 </property>
 
                         </configuration>
@@ -310,7 +310,7 @@
                                 </property>
                                 <property>
                                         <name>distanceMetric</name>
-                                        <value>mvdm</value>
+                                        <value>MVDM</value>
                                 </property>
 
                         </configuration>
@@ -323,6 +323,10 @@
 
 
 	<join name="ml_join" to="ensemble"/>
+
+
+
+
         <action name="ensemble">
                 <map-reduce>
                         <job-tracker>${jobTracker}</job-tracker>

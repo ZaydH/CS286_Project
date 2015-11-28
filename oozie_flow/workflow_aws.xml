@@ -244,7 +244,7 @@
                                 </property>
                                 <property>
                                         <name>distanceMetric</name>
-                                        <value>overlap</value>
+                                        <value>Overlap</value>
                                 </property>
 
                         </configuration>
@@ -317,7 +317,7 @@
                                 </property>
                                 <property>
                                         <name>distanceMetric</name>
-                                        <value>mvdm</value>
+                                        <value>MVDM</value>
                                 </property>
 
                         </configuration>
